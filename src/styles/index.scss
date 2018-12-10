@@ -1,0 +1,121 @@
+@import './variables.scss';
+@import './mixin.scss';
+@import './transition.scss';
+@import './element-ui.scss';
+@import './sidebar.scss';
+body {
+   height: 100%;
+   -moz-osx-font-smoothing: grayscale;
+   -webkit-font-smoothing: antialiased;
+   text-rendering: optimizeLegibility;
+   font-family: Helvetica Neue, Helvetica, PingFang SC, Hiragino Sans GB, Microsoft YaHei, Arial, sans-serif;
+}
+
+label {
+   font-weight: 700;
+}
+
+html {
+   height: 100%;
+   box-sizing: border-box;
+}
+
+#formLibs {
+   height: 100%;
+}
+
+*,
+*:before,
+*:after {
+   box-sizing: inherit;
+}
+
+a,
+a:focus,
+a:hover {
+   cursor: pointer;
+   color: inherit;
+   outline: none;
+   text-decoration: none;
+}
+
+div:focus {
+   outline: none;
+}
+
+a:focus,
+a:active {
+   outline: none;
+}
+
+a,
+a:focus,
+a:hover {
+   cursor: pointer;
+   color: inherit;
+   text-decoration: none;
+}
+
+.clearfix {
+   &:after {
+      visibility: hidden;
+      display: block;
+      font-size: 0;
+      content: " ";
+      clear: both;
+      height: 0;
+   }
+}
+
+//main-container全局样式
+.app-main {
+	min-height: 100%;
+}
+
+.app-container {
+	padding: 20px;
+}
+
+@media only screen and (max-width: 768px) {
+	.app-container {
+		padding: 0;
+		.el-card__body {
+			padding: 20px 5px;
+		}
+	}
+	.el-dialog {
+		width: 80%;
+	} // 提示框在小屏幕超出body
+	.el-message-box {
+		width: auto;
+	}
+}
+
+// 分页在小屏幕可以滚动显示
+.pagination-container {
+	margin-top: 10px;
+	overflow-x: auto;
+	text-align: right;
+}
+
+.el-table{
+	.delete-row {
+		background: #fdf2f2;
+		text-decoration:line-through;
+		color: #f56c6c;
+	}
+	.unactive-row {
+		text-decoration:line-through;
+	}
+	.warning-row {
+		background: oldlace;
+	}
+	.success-row {
+		background: #f0f9eb;
+	}
+}
+
+.no-wrap {
+	word-break: keep-all;
+	white-space: nowrap;
+}

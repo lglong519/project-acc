@@ -1,0 +1,11 @@
+export const account = (state:any) => state.account;
+export const sidebar = (state:any) => state.sidebar;
+export const device = (state:any) => state.device;
+export const myProfile = (state:any) => state.myProfile;
+export const leftTime = (state:any) => state.leftTime;
+export const timer = (state:any) => state.timer;
+export const visitedViews = (state:any) => state.tagsView.visitedViews;
+export const cachedViews = (state:any) => state.tagsView.cachedViews;
+export const isLogin = (state:any) => state.checkLogin.isLogin;
+export const user = (state:any) => state.checkLogin.user;
+export const mode = (state:any) => state.mode;
