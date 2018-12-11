@@ -25,12 +25,12 @@ export default {
 			let iconClass;
 			switch (type) {
 				case 'el':
-					iconClass = `sidebar-icon el-icon-${icon}`;
+					iconClass = `el-icon-${icon}`;
 					vnodes.push(<i class={iconClass}></i>);
 					break;
 				case 'svg': vnodes.push(<svg-icon icon-class={icon}/>); break;
 				default:
-					iconClass = `sidebar-icon fa fa-${icon}`;
+					iconClass = `fa fa-${icon}`;
 					vnodes.push(<i class={iconClass}></i>);
 			}
 		}
@@ -42,16 +42,9 @@ export default {
 };
 </script>
 <style lang="scss" scoped>
-.sidebar-icon {
-  margin-right: 10px;
-  color: #fff;
-}
 .external-link {
   .sidebar-icon,span {
-    color: #FFF6B5;
+    color: #FEE54C;
   }
-}
-.sidebar--collapse .sidebar-icon {
-  margin-left: 8px;
 }
 </style>

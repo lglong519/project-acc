@@ -3,7 +3,7 @@
 		<el-card class="box-card">
 			<el-row type="flex" justify="space-between">
 				<div>帐号登录</div>
-				<toggle-mode></toggle-mode>
+				<!-- <toggle-mode></toggle-mode> -->
 			</el-row>
 
 			<br>
@@ -32,7 +32,7 @@
 import { setToken, removeToken } from '@/utils/auth';
 import { LOCAL_SESSION } from '@/.config';
 import { mapGetters } from 'vuex';
-import ToggleMode from '@/components/ToggleMode';
+// import ToggleMode from '@/components/ToggleMode';
 
 export default {
 	data () {
@@ -63,7 +63,7 @@ export default {
 		};
 	},
 	components: {
-		ToggleMode,
+		// ToggleMode,
 	},
 	watch: {
 		$route: {

@@ -8,7 +8,6 @@
 					<el-tag size="mini" :type="leftType" :class="leftTime<60000?'blink':''">{{calcTime}}</el-tag>
 				</el-tooltip>
 			</el-row>
-			<toggle-mode class="clear-all mr-10"></toggle-mode>
 			<el-dropdown class="avatar-container" trigger="click">
 				<div class="avatar-wrapper">
 					<img :src="myProfile.image||avatar" class="user-avatar">
@@ -30,7 +29,6 @@
 import { mapGetters } from 'vuex';
 import Breadcrumb from '@/components/Breadcrumb';
 import Hamburger from '@/components/Hamburger';
-import ToggleMode from '@/components/ToggleMode';
 import processLeftTime from '@/utils/processLeftTime';
 
 export default {
@@ -42,7 +40,6 @@ export default {
 	components: {
 		Breadcrumb,
 		Hamburger,
-		ToggleMode,
 	},
 	computed: {
 		...mapGetters([

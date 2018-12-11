@@ -14,13 +14,15 @@
 				<item v-if="item.meta" :icon="item.meta.icon" :title="item.meta.title" :type="item.meta.type" />
 			</template>
 
-			<template v-for="child in item.children" v-if="!child.hidden">
-				<sidebar-item v-if="child.children&&child.children.length>0" :is-nest="true" :item="child" :key="child.path" :base-path="resolvePath(child.path)" class="nest-menu" />
-				<a v-else :href="child.path" :key="child.name" target="_blank" @click="clickLink(child.path,$event)">
-					<el-menu-item :index="resolvePath(child.path)">
-						<item v-if="child.meta" :icon="child.meta.icon" :title="child.meta.title" :type="child.meta.type" />
-					</el-menu-item>
-				</a>
+			<template v-for="child in item.children">
+				<template v-if="!child.hidden">
+					<sidebar-item v-if="child.children&&child.children.length>0" :is-nest="true" :item="child" :key="child.path" :base-path="resolvePath(child.path)" class="nest-menu" />
+					<a v-else :href="child.path" :key="child.name" target="_blank" @click="clickLink(child.path,$event)">
+						<el-menu-item :index="resolvePath(child.path)">
+							<item v-if="child.meta" :icon="child.meta.icon" :title="child.meta.title" :type="child.meta.type" />
+						</el-menu-item>
+					</a>
+				</template>
 			</template>
 		</el-submenu>
 

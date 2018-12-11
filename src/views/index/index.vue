@@ -2,12 +2,13 @@
   <div>
     <weather-info />
     <div class="dashboard-editor-container">
+		<el-row><img :src="detail" alt=""></el-row>
     </div>
   </div>
 </template>
 
-<script>
-import WeatherInfo from './components/WeatherInfo';
+<script lang="ts">
+import WeatherInfo from './components/WeatherInfo.vue';
 
 export default {
 	name: 'Index',
@@ -17,6 +18,7 @@ export default {
 	data() {
 		return {
 			panelData: {},
+			detail:require('@/assets/01.png')
 		};
 	},
 	computed: {

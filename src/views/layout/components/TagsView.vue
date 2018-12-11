@@ -55,8 +55,6 @@ export default {
 	},
 	mounted () {
 		this.addViewTags();
-		console.log('tagsView',this.$store.state.tagsView);
-
 	},
 	methods: {
 		generateRoute () {

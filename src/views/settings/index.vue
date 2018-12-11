@@ -45,7 +45,6 @@
 	}
 </style>
 
-
 <script>
 import { mapGetters } from 'vuex';
 function editForm () {
@@ -97,7 +96,7 @@ export default {
 		submit () {
 			this.$refs.editform.validate(async valid => {
 				if (valid) {
-					await this.patch(`services/users/${this.editForm._id}`, this.editForm);
+					await this.patch(`dis/users/${this.editForm._id}`, this.editForm);
 					this.$store.dispatch('GetProfile');
 					this.$message({
 						message: '修改成功',
@@ -109,6 +108,10 @@ export default {
 			});
 		},
 		cancel () {
+			if(JSON.stringify(this.myProfile)==JSON.stringify(this.editForm)){
+				this.editting = false;
+				return;
+			}
 			this.$confirm('取消后编辑的资料将丢失, 是否继续?', '提示', {
 				confirmButtonText: '确定',
 				cancelButtonText: '取消',

@@ -17,7 +17,7 @@
 			<el-alert v-if="currAccount" style="margin-bottom:5px;white-space:nowrap;" :title="currAccount.active?'BDUSS: '+currAccount.BDUSS:'BDUSS: 失效'" :type="currAccount.active?'info':'error'" :closable="false"></el-alert>
 
 			<el-table :data="tiebas" :row-class-name="tableRowClassName" :header-row-class-name="headerRowClassName" v-loading="tableLoading" border stripe>
-				<el-table-column prop="kw" label="kw">
+				<el-table-column prop="kw" label="吧名">
 					<template slot-scope="scope">
 						<a target="_blank" :onclick="`window.open('https://tieba.baidu.com/f?kw=${scope.row.kw}');`" :style="scope.row.void?'color:#f56c6c':'color:#409EFF'">{{scope.row.kw}}</a>
 					</template>
@@ -151,9 +151,6 @@ export default {
 				title: null
 			},
 			editRules: {
-				account: [
-					{ required: true, message: '请输入', trigger: 'blur' },
-				],
 				BDUSS: [
 					{ required: true, message: '请输入', trigger: 'blur' },
 				],

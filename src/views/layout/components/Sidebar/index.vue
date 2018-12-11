@@ -3,16 +3,16 @@
     <el-menu
       :show-timeout="200"
       :default-active="$route.path"
-      :collapse="isCollapse"
+      :collapse="true"
       mode="vertical"
-      background-color="#3C516B"
-      text-color="#bfcbd9"
+      background-color="#F4F5F7"
+      text-color="#42526E"
       active-text-color="#409EFF"
     >
-		<div class="sidebar-logo">
-			<router-link to='/'>{{isCollapse?'M':'MoFunc'}}</router-link>
+		<div class="sidebar-logo" :class="{'index-active':isIndex}">
+			<router-link to='/'>M</router-link>
 		</div>
-		<sidebar-item v-for="route in routes" :key="route.name" :item="route" :base-path="route.path" :class="isCollapse?'sidebar--collapse':''"/>
+		<sidebar-item v-for="route in routes" :key="route.name" :item="route" :base-path="route.path"/>
     </el-menu>
   </el-scrollbar>
 </template>
@@ -30,19 +30,26 @@ export default {
 		routes () {
 			return this.$router.options.routes;
 		},
-		isCollapse () {
-			return !this.sidebar.opened;
+		isIndex () {
+			return this.$route.path=='/index';
 		}
 	}
 };
 </script>
 <style lang="scss" scoped>
 .sidebar-logo{
+	&:hover{
+		background-color: rgb(195, 196, 198);
+		color: #409EFF;
+	}
+	&.index-active{
+		color: #409EFF;
+	}
 	height: 50px;
 	line-height: 50px;
 	font-size: 28px;
-	text-align: center;
-	background-color: #6082AB;
-	color: #fff
+	padding-left: 15px;
+	// background-color: #6082AB;
+	color: #42526E
 }
 </style>
