@@ -23,7 +23,7 @@ const router = new VueRouter({
 					path: 'index',
 					name: 'index',
 					component: resolve => require(['@/views/index/index'], resolve),
-					meta: { title: 'Index' }
+					meta: { title: 'Index', icon: 'home',type:'fa',tip:'MoFunc' }
 				}
 			]
 		},

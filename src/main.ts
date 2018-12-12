@@ -14,7 +14,10 @@ import 'element-ui/lib/theme-chalk/display.css';
 import 'font-awesome/css/font-awesome.min.css';
 import './styles/index.scss';
 
-require('./.config').MODE === 'localhost' && debug.enable('app');
+if(require('./.config').MODE === 'localhost'){
+	Vue.config.devtools = true;
+	debug.enable('app');
+}
 
 Vue.use(plugin);
 

@@ -4,14 +4,14 @@
 		<template v-if="hasOneShowingChild(item.children,item) && (!onlyOneChild.children||onlyOneChild.noShowingChildren)&&!item.alwaysShow">
 			<a :class="{'external-link':isExternalLink(onlyOneChild.path)}" :href="onlyOneChild.path" target="_blank" @click="clickLink(onlyOneChild.path,$event)">
 				<el-menu-item :index="resolvePath(onlyOneChild.path)" :class="{'submenu-title-noDropdown':!isNest}">
-					<item v-if="onlyOneChild.meta" :icon="onlyOneChild.meta.icon||item.meta.icon" :title="onlyOneChild.meta.title" :type="onlyOneChild.meta.type" />
+					<item v-if="onlyOneChild.meta" :icon="onlyOneChild.meta.icon||item.meta.icon" :title="onlyOneChild.meta.title" :type="onlyOneChild.meta.type" :tip="onlyOneChild.meta.tip" />
 				</el-menu-item>
 			</a>
 		</template>
 
 		<el-submenu v-else :index="item.name||item.path">
 			<template slot="title">
-				<item v-if="item.meta" :icon="item.meta.icon" :title="item.meta.title" :type="item.meta.type" />
+				<item v-if="item.meta" :icon="item.meta.icon" :title="item.meta.title" :type="item.meta.type" :tip="item.meta.tip" />
 			</template>
 
 			<template v-for="child in item.children">
@@ -19,7 +19,7 @@
 					<sidebar-item v-if="child.children&&child.children.length>0" :is-nest="true" :item="child" :key="child.path" :base-path="resolvePath(child.path)" class="nest-menu" />
 					<a v-else :href="child.path" :key="child.name" target="_blank" @click="clickLink(child.path,$event)">
 						<el-menu-item :index="resolvePath(child.path)">
-							<item v-if="child.meta" :icon="child.meta.icon" :title="child.meta.title" :type="child.meta.type" />
+							<item v-if="child.meta" :icon="child.meta.icon" :title="child.meta.title" :type="child.meta.type" :tip="child.meta.tip" />
 						</el-menu-item>
 					</a>
 				</template>
