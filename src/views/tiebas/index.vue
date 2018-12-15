@@ -74,7 +74,7 @@
 		<!-- edit dialog -->
 		<el-dialog :title="dialog.title" :visible.sync="dialog.visible">
 			<el-form :model="editTiebaAccount" :rules="editRules" ref="editTiebaAccount" label-width="70px">
-				<el-form-item v-if="editTiebaAccount._id" label="_id" prop="_id">
+				<el-form-item v-if="editTiebaAccount._id" label="id" prop="_id">
 					<el-input v-model="editTiebaAccount._id" disabled></el-input>
 				</el-form-item>
 				<el-form-item v-if="editTiebaAccount.un" label="un" prop="un">
@@ -84,7 +84,7 @@
 					<el-input v-model="editTiebaAccount.BDUSS" autofocus="true"></el-input>
 				</el-form-item>
 				<el-form-item v-if="editTiebaAccount.active===true||editTiebaAccount.active===false" label="active" prop="active">
-					<el-input v-model="editTiebaAccount.active" disabled></el-input>
+					<el-switch v-model="editTiebaAccount.active" disabled></el-switch>
 				</el-form-item>
 			</el-form>
 			<div slot="footer" class="dialog-footer">
@@ -283,6 +283,7 @@ export default {
 		},
 		cancel () {
 			this.dialog.visible = false;
+			this.$refs.editTiebaAccount.clearValidate();
 			this.editTiebaAccount = editTiebaAccount();
 		},
 		refresh () {

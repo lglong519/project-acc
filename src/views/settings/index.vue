@@ -9,7 +9,7 @@
 					<el-input v-model="editForm.image" placeholder="请选择头像" :disabled="!editting"></el-input>
 				</el-form-item>
 				<el-form-item label="用户名" prop="username">
-					<el-input v-model="editForm.username" placeholder="请输入帐号" :disabled="!editting"></el-input>
+					<el-input v-model="editForm.username" placeholder="请输入帐号" disabled></el-input>
 				</el-form-item>
 				<el-form-item label="邮箱" prop="email">
 					<el-input v-model="editForm.email" placeholder="请输入邮箱" :disabled="!editting"></el-input>

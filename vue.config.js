@@ -1,5 +1,6 @@
 module.exports = {
 	productionSourceMap: false,
+	baseUrl: '',
 	devServer: {
 		port: 31210,
 		https: false,
