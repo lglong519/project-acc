@@ -9,6 +9,8 @@ const debug = require('debug')('app:request');
 let mode = localStorage.getItem('mode')||'';
 mode || (mode = MODE);
 
+process.env.NODE_ENV=='production'&&(mode='development');   
+
 // create an axios instance
 const service = axios.create({
 	baseURL: REQUST[mode].BASE_URL, // api的base_url

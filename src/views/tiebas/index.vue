@@ -7,7 +7,7 @@
 			<el-button-group>
 				<el-button plain size="mini" type="primary" @click="sync">更新列表</el-button>
 				<el-button plain size="mini" type="primary" @click="toggleEdit" icon="el-icon-plus">添加帐号</el-button>
-				<el-button plain size="mini" type="primary" @click="toggleEdit(currAccount)" icon="el-icon-edit"></el-button>
+				<el-button v-if="currAccount" plain size="mini" type="primary" @click="toggleEdit(currAccount)" icon="el-icon-edit"></el-button>
 				<el-button plain size="mini" type="danger" @click="deleteAccount" icon="el-icon-delete"></el-button>
 			</el-button-group>
 		</el-card>
@@ -17,7 +17,7 @@
 			<el-alert v-if="currAccount" style="margin-bottom:5px;white-space:nowrap;" :title="currAccount.active?'BDUSS: '+currAccount.BDUSS:'BDUSS: 失效'" :type="currAccount.active?'info':'error'" :closable="false"></el-alert>
 
 			<el-table :data="tiebas" :row-class-name="tableRowClassName" :header-row-class-name="headerRowClassName" v-loading="tableLoading" border stripe>
-				<el-table-column prop="kw" label="吧名">
+				<el-table-column prop="kw" label="吧名" fixed>
 					<template slot-scope="scope">
 						<a target="_blank" :onclick="`window.open('https://tieba.baidu.com/f?kw=${scope.row.kw}');`" :style="scope.row.void?'color:#f56c6c':'color:#409EFF'">{{scope.row.kw}}</a>
 					</template>
@@ -137,7 +137,14 @@ export default {
 			tiebas: [],
 			currAccount: null,
 			tabIndex: 0,
-			sumarize: {},
+			sumarize: {
+				total:0,
+				resolve:0,
+				pendding:0,
+				reject:0,
+				void:0,
+				invalid:0,
+			},
 			pagination: {
 				total: 0,
 				currentPage: 1,

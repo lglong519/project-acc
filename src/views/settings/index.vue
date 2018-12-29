@@ -86,7 +86,8 @@ export default {
 					{ type: 'email', message: '请输入正确的邮箱地址', trigger: ['blur', 'change'] }
 				],
 				phone: [
-					{ required: false, message: '请输入电话', trigger: 'blur' },
+					{ required: false, message: '请输入手机号码', trigger: 'blur' },
+					{ min: 11, max: 11, message: '请输入正确的手机号码', trigger: 'blur' },
 				],
 			},
 			editting: false
@@ -96,7 +97,7 @@ export default {
 		submit () {
 			this.$refs.editform.validate(async valid => {
 				if (valid) {
-					await this.patch(`dis/users/${this.editForm._id}`, this.editForm);
+					await this.patch('dis/me', _.pick(this.editForm,['email','phone','image']));
 					this.$store.dispatch('GetProfile');
 					this.$message({
 						message: '修改成功',

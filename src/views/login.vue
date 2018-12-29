@@ -72,7 +72,6 @@
 import { setToken, removeToken } from '@/utils/auth';
 import { LOCAL_SESSION } from '@/.config';
 import { mapGetters } from 'vuex';
-// import ToggleMode from '@/components/ToggleMode';
 
 export default {
 	data () {
@@ -84,6 +83,30 @@ export default {
 			} else {
 				callback();
 			}
+		};
+		let validateAccount= (rule, value, callback)=> {
+			if(!value){
+				return callback();  
+			}
+			if (/^[A-Za-z_]\w{2,30}$/.test(value)) {
+				return callback();  
+			}
+			if (/^\d{11}$/.test(value)) {
+				return callback();  
+			}
+			if (/^[\w.]{3,30}@[\w.]+$/.test(value)) {
+				return callback();  
+			}
+			return callback(new Error('请输入正确的账号'));
+		};
+		let validateName= (rule, value, callback)=> {
+			if(!value){
+				return callback();  
+			}
+			if (/^[A-Za-z_]\w{2,30}$/.test(value)) {
+				return callback();  
+			}
+			return callback(new Error('请输入正确的账号'));
 		};
 		return {
 			type:'signin',
@@ -105,7 +128,8 @@ export default {
 			rules: {
 				login: [
 					{ required: true, message: '请输入帐号', trigger: 'blur' },
-					{ min: 3, max: 30, message: '长度至少 3 个字符', trigger: 'blur' }
+					{ min: 3, max: 30, message: '长度至少 3 个字符', trigger: 'blur' },
+					{ validator: validateAccount, trigger: 'blur' }
 				],
 				password: [
 					{ required: true, message: '请输入密码', trigger: 'blur' },
@@ -115,7 +139,8 @@ export default {
 			registerRules: {
 				username: [
 					{ required: true, message: '请输入帐号', trigger: 'blur' },
-					{ min: 3, max: 30, message: '长度至少 3 个字符', trigger: 'blur' }
+					{ min: 3, max: 30, message: '长度至少 3 个字符', trigger: 'blur' },
+					{ validator: validateName, trigger: 'blur' }
 				],
 				password: [
 					{ required: true, message: '请输入密码', trigger: 'blur' },
