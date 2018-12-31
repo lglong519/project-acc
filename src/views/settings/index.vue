@@ -40,14 +40,14 @@
 </template>
 
 <style lang="scss" scoped>
-	.avatar{
-		height: 100px;
-	}
+.avatar {
+	height: 100px;
+}
 </style>
 
 <script>
-import { mapGetters } from 'vuex';
-function editForm () {
+import { mapGetters } from "vuex";
+function editForm() {
 	return {
 		username: null,
 		email: null,
@@ -61,17 +61,17 @@ function editForm () {
 }
 export default {
 	computed: {
-		...mapGetters(['myProfile']),
+		...mapGetters(["myProfile"]),
 	},
 	watch: {
-		myProfile () {
+		myProfile() {
 			this.editForm = JSON.parse(JSON.stringify(this.myProfile));
-		}
+		},
 	},
-	data () {
+	data() {
 		return {
-			avatar: require('@/assets/avatar.svg'),
-			source: 'squats',
+			avatar: require("@/assets/avatar.svg"),
+			source: "squats",
 			searchForm: {
 				from: null,
 				to: null,
@@ -79,52 +79,70 @@ export default {
 			editForm: editForm(),
 			editRules: {
 				username: [
-					{ required: true, message: '请输入数量', trigger: 'blur' },
+					{ required: true, message: "请输入数量", trigger: "blur" },
 				],
 				email: [
-					{ required: false, message: '请输入邮箱', trigger: 'blur' },
-					{ type: 'email', message: '请输入正确的邮箱地址', trigger: ['blur', 'change'] }
+					{ required: false, message: "请输入邮箱", trigger: "blur" },
+					{
+						type: "email",
+						message: "请输入正确的邮箱地址",
+						trigger: ["blur", "change"],
+					},
 				],
 				phone: [
-					{ required: false, message: '请输入手机号码', trigger: 'blur' },
-					{ min: 11, max: 11, message: '请输入正确的手机号码', trigger: 'blur' },
+					{
+						required: false,
+						message: "请输入手机号码",
+						trigger: "blur",
+					},
+					{
+						min: 11,
+						max: 11,
+						message: "请输入正确的手机号码",
+						trigger: "blur",
+					},
 				],
 			},
-			editting: false
+			editting: false,
 		};
 	},
 	methods: {
-		submit () {
+		submit() {
 			this.$refs.editform.validate(async valid => {
 				if (valid) {
-					await this.patch('dis/me', _.pick(this.editForm,['email','phone','image']));
-					this.$store.dispatch('GetProfile');
+					await this.patch(
+						"dis/me",
+						_.pick(this.editForm, ["email", "phone", "image"])
+					);
+					this.$store.dispatch("GetProfile");
 					this.$message({
-						message: '修改成功',
-						type: 'success',
+						message: "修改成功",
+						type: "success",
 						duration: 1500,
 					});
 					this.editting = false;
 				}
 			});
 		},
-		cancel () {
-			if(JSON.stringify(this.myProfile)==JSON.stringify(this.editForm)){
+		cancel() {
+			if (
+				JSON.stringify(this.myProfile) == JSON.stringify(this.editForm)
+			) {
 				this.editting = false;
 				return;
 			}
-			this.$confirm('取消后编辑的资料将丢失, 是否继续?', '提示', {
-				confirmButtonText: '确定',
-				cancelButtonText: '取消',
-				type: 'warning'
+			this.$confirm("取消后编辑的资料将丢失, 是否继续?", "提示", {
+				confirmButtonText: "确定",
+				cancelButtonText: "取消",
+				type: "warning",
 			}).then(async () => {
 				this.editForm = JSON.parse(JSON.stringify(this.myProfile));
 				this.editting = false;
 			});
 		},
 	},
-	created () {
+	created() {
 		this.editForm = JSON.parse(JSON.stringify(this.myProfile));
-	}
+	},
 };
 </script>

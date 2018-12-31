@@ -15,38 +15,36 @@
 </template>
 
 <script>
-import { mapGetters } from 'vuex';
-import SidebarItem from './SidebarItem';
+import { mapGetters } from "vuex";
+import SidebarItem from "./SidebarItem";
 
 export default {
 	components: { SidebarItem },
 	computed: {
-		...mapGetters([
-			'sidebar'
-		]),
-		routes () {
+		...mapGetters(["sidebar"]),
+		routes() {
 			return this.$router.options.routes;
 		},
-		isIndex () {
-			return this.$route.path=='/index';
-		}
-	}
+		isIndex() {
+			return this.$route.path == "/index";
+		},
+	},
 };
 </script>
 <style lang="scss" scoped>
-.sidebar-logo{
-	&:hover{
+.sidebar-logo {
+	&:hover {
 		background-color: rgb(195, 196, 198);
-		color: #409EFF;
+		color: #409eff;
 	}
-	&.index-active{
-		color: #409EFF;
+	&.index-active {
+		color: #409eff;
 	}
 	height: 50px;
 	line-height: 50px;
 	font-size: 28px;
 	padding-left: 15px;
 	// background-color: #6082AB;
-	color: #42526E
+	color: #42526e;
 }
 </style>

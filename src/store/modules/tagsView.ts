@@ -1,14 +1,22 @@
 const tagsView = {
 	state: {
 		visitedViews: [],
-		cachedViews: []
+		cachedViews: [],
 	},
 	mutations: {
 		ADD_VISITED_VIEW: (state, view) => {
-			if (state.visitedViews.some(v => v.path === view.path || v.path === `${view.path}/`)) return;
-			state.visitedViews.push(Object.assign({}, view, {
-				title: view.meta.title || 'untitled'
-			}));
+			if (
+				state.visitedViews.some(
+					v => v.path === view.path || v.path === `${view.path}/`
+				)
+			) {
+				return;
+			}
+			state.visitedViews.push(
+				Object.assign({}, view, {
+					title: view.meta.title || "untitled",
+				})
+			);
 		},
 		ADD_CACHED_VIEW: (state, view) => {
 			if (state.cachedViews.includes(view.name)) return;
@@ -47,7 +55,10 @@ const tagsView = {
 			for (const i of state.cachedViews) {
 				if (i === view.name) {
 					const index = state.cachedViews.indexOf(i);
-					state.cachedViews = state.cachedViews.slice(index, index + 1);
+					state.cachedViews = state.cachedViews.slice(
+						index,
+						index + 1
+					);
 					break;
 				}
 			}
@@ -67,94 +78,93 @@ const tagsView = {
 					break;
 				}
 			}
-		}
-
+		},
 	},
 	actions: {
-		addView ({ dispatch }, view) {
-			dispatch('addVisitedView', view);
-			dispatch('addCachedView', view);
+		addView({ dispatch }, view) {
+			dispatch("addVisitedView", view);
+			dispatch("addCachedView", view);
 		},
-		addVisitedView ({ commit }, view) {
-			commit('ADD_VISITED_VIEW', view);
+		addVisitedView({ commit }, view) {
+			commit("ADD_VISITED_VIEW", view);
 		},
-		addCachedView ({ commit }, view) {
-			commit('ADD_CACHED_VIEW', view);
+		addCachedView({ commit }, view) {
+			commit("ADD_CACHED_VIEW", view);
 		},
 
-		delView ({ dispatch, state }, view) {
+		delView({ dispatch, state }, view) {
 			return new Promise(resolve => {
-				dispatch('delVisitedView', view);
-				dispatch('delCachedView', view);
+				dispatch("delVisitedView", view);
+				dispatch("delCachedView", view);
 				resolve({
 					visitedViews: [...state.visitedViews],
-					cachedViews: [...state.cachedViews]
+					cachedViews: [...state.cachedViews],
 				});
 			});
 		},
-		delVisitedView ({ commit, state }, view) {
+		delVisitedView({ commit, state }, view) {
 			return new Promise(resolve => {
-				commit('DEL_VISITED_VIEW', view);
+				commit("DEL_VISITED_VIEW", view);
 				resolve([...state.visitedViews]);
 			});
 		},
-		delCachedView ({ commit, state }, view) {
+		delCachedView({ commit, state }, view) {
 			return new Promise(resolve => {
-				commit('DEL_CACHED_VIEW', view);
+				commit("DEL_CACHED_VIEW", view);
 				resolve([...state.cachedViews]);
 			});
 		},
 
-		delOthersViews ({ dispatch, state }, view) {
+		delOthersViews({ dispatch, state }, view) {
 			return new Promise(resolve => {
-				dispatch('delOthersVisitedViews', view);
-				dispatch('delOthersCachedViews', view);
+				dispatch("delOthersVisitedViews", view);
+				dispatch("delOthersCachedViews", view);
 				resolve({
 					visitedViews: [...state.visitedViews],
-					cachedViews: [...state.cachedViews]
+					cachedViews: [...state.cachedViews],
 				});
 			});
 		},
-		delOthersVisitedViews ({ commit, state }, view) {
+		delOthersVisitedViews({ commit, state }, view) {
 			return new Promise(resolve => {
-				commit('DEL_OTHERS_VISITED_VIEWS', view);
+				commit("DEL_OTHERS_VISITED_VIEWS", view);
 				resolve([...state.visitedViews]);
 			});
 		},
-		delOthersCachedViews ({ commit, state }, view) {
+		delOthersCachedViews({ commit, state }, view) {
 			return new Promise(resolve => {
-				commit('DEL_OTHERS_CACHED_VIEWS', view);
+				commit("DEL_OTHERS_CACHED_VIEWS", view);
 				resolve([...state.cachedViews]);
 			});
 		},
 
-		delAllViews ({ dispatch, state }, view) {
+		delAllViews({ dispatch, state }, view) {
 			return new Promise(resolve => {
-				dispatch('delAllVisitedViews', view);
-				dispatch('delAllCachedViews', view);
+				dispatch("delAllVisitedViews", view);
+				dispatch("delAllCachedViews", view);
 				resolve({
 					visitedViews: [...state.visitedViews],
-					cachedViews: [...state.cachedViews]
+					cachedViews: [...state.cachedViews],
 				});
 			});
 		},
-		delAllVisitedViews ({ commit, state }) {
+		delAllVisitedViews({ commit, state }) {
 			return new Promise(resolve => {
-				commit('DEL_ALL_VISITED_VIEWS');
+				commit("DEL_ALL_VISITED_VIEWS");
 				resolve([...state.visitedViews]);
 			});
 		},
-		delAllCachedViews ({ commit, state }) {
+		delAllCachedViews({ commit, state }) {
 			return new Promise(resolve => {
-				commit('DEL_ALL_CACHED_VIEWS');
+				commit("DEL_ALL_CACHED_VIEWS");
 				resolve([...state.cachedViews]);
 			});
 		},
 
-		updateVisitedView ({ commit }, view) {
-			commit('UPDATE_VISITED_VIEW', view);
-		}
-	}
+		updateVisitedView({ commit }, view) {
+			commit("UPDATE_VISITED_VIEW", view);
+		},
+	},
 };
 
 export default tagsView;

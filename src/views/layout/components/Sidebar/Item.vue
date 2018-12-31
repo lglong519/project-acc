@@ -1,4 +1,3 @@
-/* eslint-disable */
 <script>
 export default {
 	name: 'MenuItem',

@@ -96,54 +96,54 @@
 </template>
 
 <style lang="scss" scoped>
-	.color-danger {
-	  color: #f56c6c;
+.color-danger {
+	color: #f56c6c;
+}
+.float-left {
+	float: left;
+}
+.sumarize {
+	margin-bottom: 10px;
+	background-color: #edeff2;
+	font-size: 14px;
+	color: #787b80;
+	.el-row {
+		margin-bottom: 5px;
 	}
-	.float-left {
-	  float: left;
-	}
-	.sumarize {
-	  margin-bottom: 10px;
-	  background-color: #edeff2;
-	  font-size: 14px;
-	  color: #787b80;
-	  .el-row {
-	    margin-bottom: 5px;
-	  }
-	}
+}
 </style>
 <style lang="scss">
-	.header-row th:nth-child(7) {
-	  padding: 0;
-	  .el-select {
-	    top: 4px;
-	    input {
-	      padding-left: 10px;
-	    }
-	  }
+.header-row th:nth-child(7) {
+	padding: 0;
+	.el-select {
+		top: 4px;
+		input {
+			padding-left: 10px;
+		}
 	}
+}
 </style>
 
 <script>
-function editTiebaAccount () {
+function editTiebaAccount() {
 	return {
 		BDUSS: undefined,
 	};
 }
 export default {
-	data () {
+	data() {
 		return {
 			tiebaAccounts: [],
 			tiebas: [],
 			currAccount: null,
 			tabIndex: 0,
 			sumarize: {
-				total:0,
-				resolve:0,
-				pendding:0,
-				reject:0,
-				void:0,
-				invalid:0,
+				total: 0,
+				resolve: 0,
+				pendding: 0,
+				reject: 0,
+				void: 0,
+				invalid: 0,
 			},
 			pagination: {
 				total: 0,
@@ -155,74 +155,78 @@ export default {
 			editTiebaAccount: editTiebaAccount(),
 			dialog: {
 				visible: false,
-				title: null
+				title: null,
 			},
 			editRules: {
 				BDUSS: [
-					{ required: true, message: '请输入', trigger: 'blur' },
+					{
+						required: true,
+						message: "请输入",
+						trigger: "blur",
+					},
 				],
 			},
 			tableLoading: false,
-			searchProp: '',
+			searchProp: "",
 			searchProps: [
 				{
-					status: '',
-					label: '全部'
+					status: "",
+					label: "全部",
 				},
 				{
-					status: 'pendding',
-					label: '待签'
+					status: "pendding",
+					label: "待签",
 				},
 				{
-					status: 'resolve',
-					label: '已签'
+					status: "resolve",
+					label: "已签",
 				},
 				{
-					status: 'reject',
-					label: '出错'
+					status: "reject",
+					label: "出错",
 				},
 				{
 					status: true,
-					label: '忽略'
+					label: "忽略",
 				},
 				{
 					status: false,
-					label: '无效'
-				}
+					label: "无效",
+				},
 			],
 		};
 	},
 	methods: {
 		// 判断是否 void 或者 active
-		tableRowClassName ({ row, rowIndex }) {
+		tableRowClassName({ row, rowIndex }) {
 			if (row.void) {
-				return 'delete-row';
+				return "delete-row";
 			}
 			if (!row.active) {
-				return 'unactive-row';
+				return "unactive-row";
 			}
-			return '';
+			return "";
 		},
-		headerRowClassName ({ row, column, rowIndex, columnIndex }) {
-			return 'header-row';
+		headerRowClassName({ row, column, rowIndex, columnIndex }) {
+			return "header-row";
 		},
-		pageSizeChange (e) {
+		pageSizeChange(e) {
 			this.pagination.pageSize = e;
 			this.queryTiebas();
 		},
-		pageChange (e) {
+		pageChange(e) {
 			this.pagination.currentPage = e;
 			this.queryTiebas();
 		},
-		queryAccount () {
-			return this.query('dis/tieba-accounts?sort=createdAt').then(res => {
+		queryAccount() {
+			return this.query("dis/tieba-accounts?sort=createdAt").then(res => {
 				this.tiebaAccounts = res.data;
 				this.currAccount = this.tiebaAccounts[this.tabIndex];
 				this.getSumarize();
 				this.queryTiebas();
 			});
 		},
-		queryTiebas () {
+		queryTiebas() {
 			this.tableLoading = true;
 			let query = {};
 			if (this.currAccount) {
@@ -235,27 +239,32 @@ export default {
 				} else {
 					query.status = this.searchProp;
 					query.void = {
-						$ne: true
+						$ne: true,
 					};
 				}
 			} else if (this.searchProp === false) {
 				query.active = false;
 			}
-			return this.query(`dis/tiebas?pageSize=${this.pagination.pageSize}&p=${this.pagination.currentPage - 1}&q=${JSON.stringify(query)}`).then(res => {
-				this.pagination.total = Number(res.headers['x-total-count']);
+			return this.query(
+				`dis/tiebas?pageSize=${this.pagination.pageSize}&p=${this
+					.pagination.currentPage - 1}&q=${JSON.stringify(query)}`
+			).then(res => {
+				this.pagination.total = Number(res.headers["x-total-count"]);
 				this.tiebas = res.data;
 				this.tableLoading = false;
 			});
 		},
-		getSumarize () {
+		getSumarize() {
 			if (!this.currAccount) {
 				return;
 			}
-			return this.get(`dis/tieba-accounts/${this.currAccount._id}/sumarize`).then(result => {
+			return this.get(
+				`dis/tieba-accounts/${this.currAccount._id}/sumarize`
+			).then(result => {
 				this.sumarize = result;
 			});
 		},
-		handleClick (tab, event) {
+		handleClick(tab, event) {
 			if (this.tabIndex == tab.index) {
 				return;
 			}
@@ -264,23 +273,29 @@ export default {
 			this.pagination.currentPage = 1;
 			this.refresh();
 		},
-		toggleEdit (data) {
+		toggleEdit(data) {
 			if (data && data._id) {
 				this.editTiebaAccount = JSON.parse(JSON.stringify(data));
 			} else if (this.editTiebaAccount._id) {
 				this.editTiebaAccount = editTiebaAccount();
 			}
-			this.dialog.title = this.editTiebaAccount._id ? '修改' : '添加';
+			this.dialog.title = this.editTiebaAccount._id ? "修改" : "添加";
 			this.dialog.visible = true;
 		},
-		submit () {
+		submit() {
 			this.$refs.editTiebaAccount.validate(async valid => {
 				if (valid) {
 					this.dialog.visible = false;
 					if (this.editTiebaAccount._id) {
-						await this.patch(`dis/tieba-accounts/${this.editTiebaAccount._id}`, this.editTiebaAccount);
+						await this.patch(
+							`dis/tieba-accounts/${this.editTiebaAccount._id}`,
+							this.editTiebaAccount
+						);
 					} else {
-						await this.post('dis/tieba-accounts', this.editTiebaAccount);
+						await this.post(
+							"dis/tieba-accounts",
+							this.editTiebaAccount
+						);
 					}
 					await this.queryAccount();
 					this.editTiebaAccount = editTiebaAccount();
@@ -288,87 +303,103 @@ export default {
 				}
 			});
 		},
-		cancel () {
+		cancel() {
 			this.dialog.visible = false;
 			this.$refs.editTiebaAccount.clearValidate();
 			this.editTiebaAccount = editTiebaAccount();
 		},
-		refresh () {
+		refresh() {
 			this.getSumarize();
 			this.queryTiebas();
 		},
-		remove (data) {
-			this.$confirm('此操作将永久删除, 是否继续?', '提示', {
-				confirmButtonText: '确定',
-				cancelButtonText: '取消',
-				type: 'warning'
-			}).then(async () => {
-				await this.del(`dis/tiebas/${data._id}`);
-				this.$notify.success({
-					message: '删除成功',
+		remove(data) {
+			this.$confirm("此操作将永久删除, 是否继续?", "提示", {
+				confirmButtonText: "确定",
+				cancelButtonText: "取消",
+				type: "warning",
+			})
+				.then(async () => {
+					await this.del(`dis/tiebas/${data._id}`);
+					this.$notify.success({
+						message: "删除成功",
+					});
+					this.refresh();
+				})
+				.catch(action => {
+					this.$notify({
+						type: action === "cancel" ? "info" : "error",
+						message:
+							action === "cancel" ? "已取消删除" : "删除失败",
+					});
 				});
-				this.refresh();
-			}).catch(action => {
-				this.$notify({
-					type: action === 'cancel' ? 'info' : 'error',
-					message: action === 'cancel' ? '已取消删除' : '删除失败',
-				});
-			});
 		},
-		sync () {
+		sync() {
 			if (!this.currAccount) {
 				return;
 			}
-			this.post(`dis/tieba-accounts/${this.currAccount._id}/tiebas/sync`).then(() => {
+			this.post(
+				`dis/tieba-accounts/${this.currAccount._id}/tiebas/sync`
+			).then(() => {
 				this.$notify.success({
-					message: '正在更新列表,请稍后刷新...',
+					message: "正在更新列表,请稍后刷新...",
 				});
 			});
 		},
-		signOne (data) {
+		signOne(data) {
 			this.post(`dis/tiebas/${data._id}/sign`).then(result => {
-				if (result.status == 'resolve') {
+				if (result.status == "resolve") {
 					this.$notify.success({
-						message: '签到成功',
+						message: "签到成功",
 					});
 				} else {
 					this.$notify.error({
-						message: result.desc || '签到失败',
+						message: result.desc || "签到失败",
 					});
 				}
 			});
 		},
-		updateVoid (data) {
-			this.patch(`dis/tiebas/${data._id}`, data).then(() => {
-				this.getSumarize();
-			}).catch(() => {
-				data.void = !data.void;
-			});
+		updateVoid(data) {
+			this.patch(`dis/tiebas/${data._id}`, data)
+				.then(() => {
+					this.getSumarize();
+				})
+				.catch(() => {
+					data.void = !data.void;
+				});
 		},
-		searchBystatus () {
+		searchBystatus() {
 			this.queryTiebas();
 		},
-		deleteAccount () {
-			this.$confirm(`此操作将永久删除帐号: ${this.currAccount.un} , 是否继续?`, '提示', {
-				confirmButtonText: '确定',
-				cancelButtonText: '取消',
-				type: 'warning'
-			}).then(async () => {
-				await this.del(`dis/tieba-accounts/${this.currAccount._id}`);
-				this.$notify.success({
-					message: '删除成功',
+		deleteAccount() {
+			this.$confirm(
+				`此操作将永久删除帐号: ${this.currAccount.un} , 是否继续?`,
+				"提示",
+				{
+					confirmButtonText: "确定",
+					cancelButtonText: "取消",
+					type: "warning",
+				}
+			)
+				.then(async () => {
+					await this.del(
+						`dis/tieba-accounts/${this.currAccount._id}`
+					);
+					this.$notify.success({
+						message: "删除成功",
+					});
+					this.queryAccount();
+				})
+				.catch(action => {
+					this.$notify({
+						type: action === "cancel" ? "info" : "error",
+						message:
+							action === "cancel" ? "已取消删除" : "删除失败",
+					});
 				});
-				this.queryAccount();
-			}).catch(action => {
-				this.$notify({
-					type: action === 'cancel' ? 'info' : 'error',
-					message: action === 'cancel' ? '已取消删除' : '删除失败',
-				});
-			});
-		}
+		},
 	},
-	created () {
+	created() {
 		this.queryAccount();
-	}
+	},
 };
 </script>

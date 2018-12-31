@@ -1,15 +1,15 @@
-import axios from 'axios';
-import router from '@/router';
-import store from '@/store';
-import { getToken, expireToken } from '@/utils/auth';
-const { SESSION_KEY, REQUST, MODE, SESSION_EXPIRE_TIME } =require('@/.config');
-import { Message, MessageBox } from 'element-ui';
-import _ from 'lodash';
-const debug = require('debug')('app:request');
-let mode = localStorage.getItem('mode')||'';
+import axios from "axios";
+import router from "@/router";
+import store from "@/store";
+import { getToken, expireToken } from "@/utils/auth";
+const { SESSION_KEY, REQUST, MODE, SESSION_EXPIRE_TIME } = require("@/.config");
+import { Message, MessageBox } from "element-ui";
+import _ from "lodash";
+const debug = require("debug")("app:request");
+let mode = localStorage.getItem("mode") || "";
 mode || (mode = MODE);
 
-process.env.NODE_ENV=='production'&&(mode='development');   
+process.env.NODE_ENV == "production" && (mode = "development");
 
 // create an axios instance
 const service = axios.create({
@@ -27,8 +27,8 @@ service.interceptors.request.use(
 			config.headers[SESSION_KEY] = getToken();
 		}
 
-		config.headers['x-requested-with'] = 'XMLHttpRequest';
-		config.headers['x-serve'] = 'service';
+		config.headers["x-requested-with"] = "XMLHttpRequest";
+		config.headers["x-serve"] = "service";
 		return config;
 	},
 	error => {
@@ -41,8 +41,8 @@ service.interceptors.request.use(
 // respone interceptor
 service.interceptors.response.use(
 	response => {
-		debug('response', response);
-		if (!_.get(response, 'data.accessToken')) {
+		debug("response", response);
+		if (!_.get(response, "data.accessToken")) {
 			expireToken(Date.now() + SESSION_EXPIRE_TIME);
 		}
 		return response;
@@ -52,21 +52,30 @@ service.interceptors.response.use(
 		let duration = 3000;
 		let redirect;
 		let message;
-		if (_.get(error, 'response.status') === 401 || _.get(error, 'response.status') === 403) {
-			store.commit('GET_PROFILE', {});
-			message = '未登录';
-			_.get(error, 'response.status') === 403 && (message = '权限不足');
+		if (
+			_.get(error, "response.status") === 401 ||
+			_.get(error, "response.status") === 403
+		) {
+			store.commit("GET_PROFILE", {});
+			message = "未登录";
+			_.get(error, "response.status") === 403 && (message = "权限不足");
 			duration = 2000;
-			redirect = { path: '/login', query: { redirect: router.app.$route.fullPath } };
+			redirect = {
+				path: "/login",
+				query: { redirect: router.app.$route.fullPath },
+			};
 		}
 		Message({
-			message: message || _.get(error, 'response.data.message') || _.get(error, 'response.data.errors.type.message') || error.message,
-			type: 'error',
+			message:
+				message ||
+				_.get(error, "response.data.message") ||
+				_.get(error, "response.data.errors.type.message") ||
+				error.message,
+			type: "error",
 			duration,
-			onClose () {
+			onClose() {
 				redirect && router.push(redirect);
-
-			}
+			},
 		});
 		return Promise.reject(error);
 	}

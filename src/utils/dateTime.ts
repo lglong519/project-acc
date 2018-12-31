@@ -5,8 +5,8 @@
 // offsetInMinutes
 // offsetInSeconds
 // format：'YYYY-MM-DD HH:mm:SS'
-const Joi = require('joi');
-const moment = require('moment');
+const Joi = require("joi");
+const moment = require("moment");
 
 /**
  * @param {Date} [time] 被计算的时间，默认：当前时间
@@ -19,11 +19,10 @@ const moment = require('moment');
  }
  */
 class DateTime {
-
 	_time: Date;
-	time: Date|string|number;
+	time: Date | string | number;
 	_format?: string;
-	constructor (time?:string|number, format?:string) {
+	constructor(time?: string | number, format?: string) {
 		const validate = Joi.validate(time, Joi.date().default(Date.now()));
 		if (validate.error) {
 			throw validate.error;
@@ -36,7 +35,7 @@ class DateTime {
 			this.time = this._time;
 		}
 	}
-	offsetInDays (days:number) {
+	offsetInDays(days: number) {
 		const validate = Joi.validate(days, Joi.number().required());
 		if (validate.error) {
 			throw validate.error;
@@ -47,7 +46,7 @@ class DateTime {
 		}
 		return this.time;
 	}
-	offsetInHours (hours:number) {
+	offsetInHours(hours: number) {
 		const validate = Joi.validate(hours, Joi.number().required());
 		if (validate.error) {
 			throw validate.error;
@@ -58,7 +57,7 @@ class DateTime {
 		}
 		return this.time;
 	}
-	offsetInMinutes (minutes:number) {
+	offsetInMinutes(minutes: number) {
 		const validate = Joi.validate(minutes, Joi.number().required());
 		if (validate.error) {
 			throw validate.error;
@@ -69,7 +68,7 @@ class DateTime {
 		}
 		return this.time;
 	}
-	offsetInSeconds (seconds:number) {
+	offsetInSeconds(seconds: number) {
 		const validate = Joi.validate(seconds, Joi.number().required());
 		if (validate.error) {
 			throw validate.error;
@@ -80,7 +79,7 @@ class DateTime {
 		}
 		return this.time;
 	}
-	format (pattern:string) {
+	format(pattern: string) {
 		const validate = Joi.validate(pattern, Joi.string().required());
 		if (validate.error) {
 			throw validate.error;
@@ -89,7 +88,6 @@ class DateTime {
 		this.time = moment(this.time).format(this._format);
 		return this.time;
 	}
-
 }
 
 export default DateTime;

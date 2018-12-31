@@ -1,6 +1,6 @@
 module.exports = {
 	productionSourceMap: false,
-	baseUrl: '',
+	baseUrl: "",
 	devServer: {
 		port: 31210,
 		https: false,
@@ -13,17 +13,17 @@ module.exports = {
 			rules: [
 				{
 					test: /\.config$/,
-					loader: 'json-loader'
-				}
-			]
+					loader: "json-loader",
+				},
+			],
 		},
 		externals: {
-			lodash: '_',
-			'vue': 'Vue',
-			'vuex': 'Vuex',
-			'vue-router': 'VueRouter',
-			'element-ui': 'ELEMENT',
-			'axios': 'axios',
-		}
-	}
-}
+			lodash: "_",
+			vue: "Vue",
+			vuex: "Vuex",
+			"vue-router": "VueRouter",
+			"element-ui": "ELEMENT",
+			axios: "axios",
+		},
+	},
+};

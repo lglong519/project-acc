@@ -13,43 +13,45 @@
 
 <script>
 export default {
-	data () {
+	data() {
 		return {
-			levelList: null
+			levelList: null,
 		};
 	},
 	watch: {
-		$route () {
+		$route() {
 			this.getBreadcrumb();
-		}
+		},
 	},
-	created () {
+	created() {
 		this.getBreadcrumb();
 	},
 	methods: {
-		getBreadcrumb () {
+		getBreadcrumb() {
 			let matched = this.$route.matched.filter(item => item.name);
 			const first = matched[0];
-			if (first && first.name !== 'index') {
-				matched = [{ path: '/index', meta: { title: 'Index' } }].concat(matched);
+			if (first && first.name !== "index") {
+				matched = [{ path: "/index", meta: { title: "Index" } }].concat(
+					matched
+				);
 			}
 			this.levelList = matched;
-		}
-	}
+		},
+	},
 };
 </script>
 
 <style rel="stylesheet/scss" lang="scss" scoped>
-	.app-breadcrumb.el-breadcrumb {
-	  position: absolute;
-	  left: 46px;
-	  display: inline-block;
-	  font-size: 14px;
-	  line-height: 50px;
+.app-breadcrumb.el-breadcrumb {
+	position: absolute;
+	left: 46px;
+	display: inline-block;
+	font-size: 14px;
+	line-height: 50px;
 	//   margin-left: 10px;
-	  .no-redirect {
-	    color: #97a8be;
-	    cursor: text;
-	  }
+	.no-redirect {
+		color: #97a8be;
+		cursor: text;
 	}
+}
 </style>

@@ -1,8 +1,8 @@
-export default function debounce (func:any, wait:number, immediate?:boolean) {
-	let timeout:any, args:any, context:any, timestamp:number, result:any;
+export default function debounce(func: any, wait: number, immediate?: boolean) {
+	let timeout: any, args: any, context: any, timestamp: number, result: any;
 
-	const later = function () {
-	// 据上一次触发时间间隔
+	const later = function() {
+		// 据上一次触发时间间隔
 		const last = +new Date() - timestamp;
 
 		// 上次被包装函数被调用时间间隔last小于设定时间间隔wait
@@ -17,7 +17,7 @@ export default function debounce (func:any, wait:number, immediate?:boolean) {
 			}
 		}
 	};
-	return function (...args:any[]) {
+	return function(...args: any[]) {
 		// context = this;
 		timestamp = +new Date();
 		const callNow = immediate && !timeout;

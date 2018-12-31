@@ -1,26 +1,26 @@
-const { MODE } =require('@/.config') ;
+const { MODE } = require("@/.config");
 
 const state = {
-	account: localStorage.getItem('account'),
+	account: localStorage.getItem("account"),
 	sidebar: {
-		opened: !!localStorage.getItem('sidebarStatus'),
-		withoutAnimation: false
+		opened: !!localStorage.getItem("sidebarStatus"),
+		withoutAnimation: false,
 	},
-	device: 'desktop',
+	device: "desktop",
 	myProfile: {},
 	leftTime: 0,
 	timer: null,
-	mode: localStorage.getItem('mode') || MODE,
+	mode: localStorage.getItem("mode") || MODE,
 	tagsView: {
 		visitedViews: [
 			{
-				path: '/settings',
-				name: 'Settings',
-				meta: { title: 'Settings', icon: 'gear' }
-			}
+				path: "/settings",
+				name: "Settings",
+				meta: { title: "Settings", icon: "gear" },
+			},
 		],
-		cachedViews: ['Index','Tieba','Settings'],
-	}
+		cachedViews: ["Index", "Tieba", "Settings"],
+	},
 };
 
 export default state;

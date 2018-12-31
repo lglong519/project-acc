@@ -1,15 +1,18 @@
-if (!localStorage.getItem('gitData')) {
-	localStorage.setItem('gitData', JSON.stringify({
-		entryDate: 0,
-		repos: [],
-		commits: {
-			total: 0,
-			today: 0,
-			week: [0, 0, 0, 0, 0, 0, 0],
-			list: {}
-		}
-	}));
+if (!localStorage.getItem("gitData")) {
+	localStorage.setItem(
+		"gitData",
+		JSON.stringify({
+			entryDate: 0,
+			repos: [],
+			commits: {
+				total: 0,
+				today: 0,
+				week: [0, 0, 0, 0, 0, 0, 0],
+				list: {},
+			},
+		})
+	);
 }
-if (!localStorage.getItem('city')) {
-	localStorage.setItem('city', '东莞');
+if (!localStorage.getItem("city")) {
+	localStorage.setItem("city", "东莞");
 }

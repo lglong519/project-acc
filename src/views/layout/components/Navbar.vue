@@ -26,15 +26,15 @@
 </template>
 
 <script>
-import { mapGetters } from 'vuex';
-import Breadcrumb from '@/components/Breadcrumb';
-import Hamburger from '@/components/Hamburger';
-import processLeftTime from '@/utils/processLeftTime';
+import { mapGetters } from "vuex";
+import Breadcrumb from "@/components/Breadcrumb";
+import Hamburger from "@/components/Hamburger";
+import processLeftTime from "@/utils/processLeftTime";
 
 export default {
-	data () {
+	data() {
 		return {
-			avatar: require('@/assets/avatar.svg'),
+			avatar: require("@/assets/avatar.svg"),
 		};
 	},
 	components: {
@@ -42,12 +42,8 @@ export default {
 		Hamburger,
 	},
 	computed: {
-		...mapGetters([
-			'sidebar',
-			'myProfile',
-			'leftTime',
-		]),
-		calcTime () {
+		...mapGetters(["sidebar", "myProfile", "leftTime"]),
+		calcTime() {
 			let m = new Date(this.leftTime).getMinutes();
 			let s = new Date(this.leftTime).getSeconds();
 			m < 10 && (m = `0${m}`);
@@ -58,109 +54,110 @@ export default {
 			}
 			return `${m}:${s}`;
 		},
-		leftType () {
+		leftType() {
 			if (this.leftTime > 600000) {
-				return 'success';
+				return "success";
 			}
 			if (this.leftTime < 60000) {
-				return 'danger';
+				return "danger";
 			}
 			if (this.leftTime < 180000) {
-				return 'warning';
+				return "warning";
 			}
-			return '';
-		}
+			return "";
+		},
 	},
 	methods: {
-		toggleSideBar () {
-			this.$store.dispatch('ToggleSideBar');
+		toggleSideBar() {
+			this.$store.dispatch("ToggleSideBar");
 		},
-		logout () {
-			this.$confirm('退出登录?', '', {
-				confirmButtonText: '确定',
-				cancelButtonText: '取消',
-				type: 'warning',
-			}).then(() => {
-				this.$store.dispatch('LogOut');
-			}).catch(() => {
-				this.$message({
-					type: 'info',
-					message: '已取消'
+		logout() {
+			this.$confirm("退出登录?", "", {
+				confirmButtonText: "确定",
+				cancelButtonText: "取消",
+				type: "warning",
+			})
+				.then(() => {
+					this.$store.dispatch("LogOut");
+				})
+				.catch(() => {
+					this.$message({
+						type: "info",
+						message: "已取消",
+					});
 				});
-			});
 		},
 	},
-	created () {
+	created() {
 		processLeftTime(this.$store);
-	}
+	},
 };
 </script>
 
 <style rel="stylesheet/scss" lang="scss" scoped>
-	.hover {
-	  background-color: #ecf5ff;
-	  color: #66b1ff;
+.hover {
+	background-color: #ecf5ff;
+	color: #66b1ff;
+}
+.navbar {
+	height: 50px;
+	line-height: 50px;
+	border-radius: 0px !important;
+	.hamburger-container {
+		line-height: 58px;
+		height: 50px;
+		float: left;
+		padding: 0 10px;
 	}
-	.navbar {
-	  height: 50px;
-	  line-height: 50px;
-	  border-radius: 0px !important;
-	  .hamburger-container {
-	    line-height: 58px;
-	    height: 50px;
-	    float: left;
-	    padding: 0 10px;
-	  }
-	  .screenfull {
-	    position: absolute;
-	    right: 90px;
-	    top: 16px;
-	    color: red;
-	  }
-	  .float-right {
+	.screenfull {
+		position: absolute;
+		right: 90px;
+		top: 16px;
+		color: red;
+	}
+	.float-right {
 		z-index: 1;
 		position: relative;
-	    float: right;
-	    height: 49px;
-	    display: flex;
+		float: right;
+		height: 49px;
+		display: flex;
 		background-color: #fff;
-	    .mr-10 {
-	      margin-right: 10px;
-	    }
-	  }
-	  .clear-all {
-	    margin: 0;
-	    padding: 0;
-	    line-height: 48px;
-	  }
-	  .avatar-container {
-	    height: 50px;
-	    display: inline-block;
-	    margin-right: 20px;
-	    .avatar-wrapper {
-	      cursor: pointer;
-	      margin-top: 5px;
-	      position: relative;
-	      .user-avatar {
-	        width: 40px;
-	        height: 40px;
-	        border-radius: 10px;
-	      }
-	    }
-	  }
+		.mr-10 {
+			margin-right: 10px;
+		}
 	}
-	@keyframes blink {
-	  0% {
-	    opacity: 1;
-	  }
-	  100% {
-	    opacity: 0;
-	  }
+	.clear-all {
+		margin: 0;
+		padding: 0;
+		line-height: 48px;
 	}
+	.avatar-container {
+		height: 50px;
+		display: inline-block;
+		margin-right: 20px;
+		.avatar-wrapper {
+			cursor: pointer;
+			margin-top: 5px;
+			position: relative;
+			.user-avatar {
+				width: 40px;
+				height: 40px;
+				border-radius: 10px;
+			}
+		}
+	}
+}
+@keyframes blink {
+	0% {
+		opacity: 1;
+	}
+	100% {
+		opacity: 0;
+	}
+}
 
-	/* 定义blink*/
-	.blink {
-	  animation: blink 1s linear infinite;
-	}
+/* 定义blink*/
+.blink {
+	animation: blink 1s linear infinite;
+}
 </style>
-
