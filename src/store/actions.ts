@@ -1,8 +1,9 @@
+import { ActionTree } from "vuex";
 import api from "@/api";
 import router from "@/router";
 import { removeToken } from "@/utils/auth";
 
-export default {
+const actions: ActionTree<any, any> = {
 	ToggleSideBar: ({ commit }) => {
 		commit("TOGGLE_SIDEBAR");
 	},
@@ -16,7 +17,7 @@ export default {
 		commit("TOGGLE_DEVICE", device);
 	},
 	GetProfile({ commit }) {
-		return api.get("dis/me").then(result => {
+		return api.get("dis/me").then((result: any) => {
 			commit("GET_PROFILE", result);
 		});
 	},
@@ -31,3 +32,5 @@ export default {
 		});
 	},
 };
+
+export default actions;

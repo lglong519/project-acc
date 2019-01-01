@@ -50,7 +50,7 @@ service.interceptors.response.use(
 	error => {
 		debug(error);
 		let duration = 3000;
-		let redirect;
+		let redirect: { path: string; query: any };
 		let message;
 		if (
 			_.get(error, "response.status") === 401 ||

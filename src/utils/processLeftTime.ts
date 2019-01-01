@@ -2,7 +2,7 @@ import { getToken } from "@/utils/auth";
 import router from "@/router";
 import { MessageBox } from "element-ui";
 
-export default function processLeftTime(store) {
+export default function processLeftTime(store: any) {
 	if (store.getters.timer) {
 		return;
 	}

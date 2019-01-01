@@ -14,12 +14,14 @@
 	</div>
 </template>
 
-<script>
+<script lang="ts">
+import Vue from "vue";
+import { Component } from "vue-property-decorator";
 import { Navbar, Sidebar, AppMain, TagsView } from "./components";
 import ResizeMixin from "./mixin/ResizeHandler";
+import { Getter } from "vuex-class";
 
-export default {
-	name: "Layout",
+@Component({
 	components: {
 		Navbar,
 		Sidebar,
@@ -27,28 +29,22 @@ export default {
 		TagsView,
 	},
 	mixins: [ResizeMixin],
-	computed: {
-		sidebar() {
-			return this.$store.state.sidebar;
-		},
-		device() {
-			return this.$store.state.device;
-		},
-		classObj() {
-			return {
-				hideSidebar: !this.sidebar.opened,
-				openSidebar: this.sidebar.opened,
-				withoutAnimation: this.sidebar.withoutAnimation,
-				mobile: this.device === "mobile",
-			};
-		},
-	},
-	methods: {
-		handleClickOutside() {
-			this.$store.dispatch("CloseSideBar", { withoutAnimation: false });
-		},
-	},
-};
+})
+export default class Layout extends Vue {
+	@Getter sidebar: any;
+	@Getter device: any;
+	get classObj() {
+		return {
+			hideSidebar: !this.sidebar.opened,
+			openSidebar: this.sidebar.opened,
+			withoutAnimation: this.sidebar.withoutAnimation,
+			mobile: this.device === "mobile",
+		};
+	}
+	public handleClickOutside() {
+		this.$store.dispatch("CloseSideBar", { withoutAnimation: false });
+	}
+}
 </script>
 
 <style rel="stylesheet/scss" lang="scss" scoped>

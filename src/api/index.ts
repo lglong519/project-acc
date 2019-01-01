@@ -1,8 +1,10 @@
 import Service from "@/utils/request";
 const get = (method = "get") => (url: string, params = {}, config = {}) =>
-	Service[method](url, { params, ...config }).then(res => res.data);
+	(Service as any)
+		[method](url, { params, ...config })
+		.then((res: any) => res.data);
 const post = (method = "post") => (url: string, params = {}, config = {}) =>
-	Service[method](url, params, config).then(res => res.data);
+	(Service as any)[method](url, params, config).then((res: any) => res.data);
 const query = (url: string, params = {}, config = {}) =>
 	Service.get(url, { params, ...config });
 

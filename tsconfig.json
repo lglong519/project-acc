@@ -9,8 +9,11 @@
 	  "experimentalDecorators": true,
 	  "esModuleInterop": true,
 	  "allowSyntheticDefaultImports": true,
+	  "strictFunctionTypes": false,
 	  "sourceMap": true,
+	  "allowJs":true,
 	  "baseUrl": ".",
+	  "outDir": "./tsc/",
 	  "types": [
 		"webpack-env"
 	  ],

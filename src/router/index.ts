@@ -9,7 +9,7 @@ Vue.use(VueRouter);
 
 const Layout = (resolve: any) => require(["@/views/layout/Layout"], resolve);
 
-const router = new VueRouter({
+const router: VueRouter = new VueRouter({
 	mode: "hash", // history
 	routes: [
 		{ path: "/404", component: () => import("@/views/404.vue") },
@@ -82,7 +82,7 @@ export default router;
 router.onError((error: Error) => {
 	const pattern = /Loading chunk (\d)+ failed/g;
 	const isChunkLoadFailed = error.message.match(pattern);
-	const targetPath = router.history.pending.fullPath;
+	const targetPath = (router as any).history.pending.fullPath;
 	if (isChunkLoadFailed) {
 		router.replace(targetPath);
 	}

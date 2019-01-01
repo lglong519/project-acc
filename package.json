@@ -3,6 +3,7 @@
 	"version": "0.1.0",
 	"private": true,
 	"scripts": {
+		"watch": "tsc --watch",
 		"serve": "vue-cli-service serve",
 		"build": "vue-cli-service build && npm run deploy",
 		"deploy": "rsync -rv --delete ./dist/* root@mofunc.com:/root/data/server-site/public/acc",
@@ -17,14 +18,17 @@
 		"moment": "^2.22.2",
 		"normalize.css": "^8.0.1",
 		"nprogress": "^0.2.0",
-		"vue": "^2.5.17",
+		"vue": "^2.5.21",
 		"vue-class-component": "^6.0.0",
 		"vue-property-decorator": "^7.0.0",
 		"vue-router": "^3.0.1",
-		"vuex": "^3.0.1"
+		"vuex": "^3.0.1",
+		"vuex-class": "^0.3.1"
 	},
 	"devDependencies": {
+		"@types/debug": "0.0.31",
 		"@types/js-cookie": "^2.2.0",
+		"@types/lodash": "^4.14.119",
 		"@types/nprogress": "0.0.29",
 		"@vue/cli-plugin-babel": "^3.2.0",
 		"@vue/cli-plugin-eslint": "^3.2.0",
@@ -38,8 +42,8 @@
 		"json-loader": "^0.5.7",
 		"node-sass": "^4.9.0",
 		"sass-loader": "^7.0.1",
-		"typescript": "^3.0.0",
-		"vue-template-compiler": "^2.5.17"
+		"typescript": "~3.1.1",
+		"vue-template-compiler": "^2.5.21"
 	},
 	"eslintConfig": {
 		"root": true,
@@ -51,7 +55,9 @@
 			"@vue/prettier",
 			"@vue/typescript"
 		],
-		"rules": {},
+		"rules": {
+			"no-console": 1
+		},
 		"parserOptions": {
 			"parser": "typescript-eslint-parser"
 		}

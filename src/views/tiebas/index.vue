@@ -1,8 +1,8 @@
 <template>
 	<div class="app-container">
-		<el-card class="sumarize" shadow="hover">
+		<el-card class="summarize" shadow="hover">
 			<el-row>
-				总共 {{sumarize.total}} 个贴吧，已签 {{sumarize.resolve}} 个，待签 {{sumarize.pendding}} 个，出错 {{sumarize.reject}} 个，忽略 {{sumarize.void}} 个， 无效 {{sumarize.invalid}} 个
+				总共 {{summarize.total}} 个贴吧，已签 {{summarize.resolve}} 个，待签 {{summarize.pendding}} 个，出错 {{summarize.reject}} 个，忽略 {{summarize.void}} 个， 无效 {{summarize.invalid}} 个
 			</el-row>
 			<el-button-group>
 				<el-button plain size="mini" type="primary" @click="sync">更新列表</el-button>
@@ -95,35 +95,6 @@
 	</div>
 </template>
 
-<style lang="scss" scoped>
-.color-danger {
-	color: #f56c6c;
-}
-.float-left {
-	float: left;
-}
-.sumarize {
-	margin-bottom: 10px;
-	background-color: #edeff2;
-	font-size: 14px;
-	color: #787b80;
-	.el-row {
-		margin-bottom: 5px;
-	}
-}
-</style>
-<style lang="scss">
-.header-row th:nth-child(7) {
-	padding: 0;
-	.el-select {
-		top: 4px;
-		input {
-			padding-left: 10px;
-		}
-	}
-}
-</style>
-
 <script>
 function editTiebaAccount() {
 	return {
@@ -137,7 +108,7 @@ export default {
 			tiebas: [],
 			currAccount: null,
 			tabIndex: 0,
-			sumarize: {
+			summarize: {
 				total: 0,
 				resolve: 0,
 				pendding: 0,
@@ -259,9 +230,9 @@ export default {
 				return;
 			}
 			return this.get(
-				`dis/tieba-accounts/${this.currAccount._id}/sumarize`
+				`dis/tieba-accounts/${this.currAccount._id}/summarize`
 			).then(result => {
-				this.sumarize = result;
+				this.summarize = result;
 			});
 		},
 		handleClick(tab, event) {
@@ -403,3 +374,32 @@ export default {
 	},
 };
 </script>
+
+<style lang="scss" scoped>
+.color-danger {
+	color: #f56c6c;
+}
+.float-left {
+	float: left;
+}
+.summarize {
+	margin-bottom: 10px;
+	background-color: #edeff2;
+	font-size: 14px;
+	color: #787b80;
+	.el-row {
+		margin-bottom: 5px;
+	}
+}
+</style>
+<style lang="scss">
+.header-row th:nth-child(7) {
+	padding: 0;
+	.el-select {
+		top: 4px;
+		input {
+			padding-left: 10px;
+		}
+	}
+}
+</style>

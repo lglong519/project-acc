@@ -183,9 +183,6 @@ export default {
 			},
 		};
 	},
-	components: {
-		// ToggleMode,
-	},
 	watch: {
 		$route: {
 			handler(route) {
