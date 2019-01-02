@@ -10,7 +10,8 @@ Vue.use(VueRouter);
 const Layout = (resolve: any) => require(["@/views/layout/Layout"], resolve);
 
 const router: VueRouter = new VueRouter({
-	mode: "hash", // history
+	mode: "history", // history hash
+	base: "/acc/",
 	routes: [
 		{ path: "/404", component: () => import("@/views/404.vue") },
 		{

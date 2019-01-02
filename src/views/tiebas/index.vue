@@ -45,14 +45,14 @@
 						{{scope.row.updatedAt|dateTime}}
 					</template>
 				</el-table-column>
-				<el-table-column width="70" label="active" align="center">
+				<el-table-column width="70" label="忽略" align="center">
 					<template slot-scope="scope">
 						<el-switch v-model="scope.row.void" :data-id="scope.row._id" ref="dataId" @change="updateVoid(scope.row)" active-color="#f56c6c" inactive-color="#409EFF"></el-switch>
 					</template>
 				</el-table-column>
 				<el-table-column width="130">
-					<template slot="header">
-						<el-select v-model="searchProp" placeholder="请选择" size="mini" @change="searchBystatus">
+					<template slot="header" slot-scope="scope">
+						<el-select v-model="searchProp" placeholder="请选择" size="mini" :data-s="scope" @change="searchBystatus">
 							<el-option v-for="item in searchProps" :key="item.label" :label="item.label" :value="item.status">
 							</el-option>
 						</el-select>
