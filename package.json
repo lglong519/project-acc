@@ -58,6 +58,9 @@
 		"rules": {
 			"no-console": 1
 		},
+		"globals":{
+			"_":false
+		},
 		"parserOptions": {
 			"parser": "typescript-eslint-parser"
 		}

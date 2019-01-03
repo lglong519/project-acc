@@ -3,7 +3,6 @@
 		<el-card class="box-card">
 			<el-row type="flex" justify="space-between">
 				<div>{{type =='signin'?'登录':'注册'}}</div>
-				<!-- <toggle-mode></toggle-mode> -->
 			</el-row>
 			<br>
 			<!-- 登录 -->
@@ -68,132 +67,121 @@
 		</el-card>
 	</div>
 </template>
-<script>
+<script lang="ts">
 import { setToken, removeToken } from "@/utils/auth";
-import { LOCAL_SESSION } from "@/.config";
-import { mapGetters } from "vuex";
+const { LOCAL_SESSION } = require("@/.config");
 
-export default {
-	data() {
-		let validatePassword = (rule, value, callback) => {
-			if (value === "") {
-				callback(new Error("请再次输入密码"));
-			} else if (value !== this.registerForm.password) {
-				callback(new Error("两次输入密码不一致!"));
-			} else {
-				callback();
-			}
-		};
-		let validateAccount = (rule, value, callback) => {
-			if (!value) {
-				return callback();
-			}
-			if (/^[A-Za-z_]\w{2,30}$/.test(value)) {
-				return callback();
-			}
-			if (/^\d{11}$/.test(value)) {
-				return callback();
-			}
-			if (/^[\w.]{3,30}@[\w.]+$/.test(value)) {
-				return callback();
-			}
-			return callback(new Error("请输入正确的账号"));
-		};
-		let validateName = (rule, value, callback) => {
-			if (!value) {
-				return callback();
-			}
-			if (/^[A-Za-z_]\w{2,30}$/.test(value)) {
-				return callback();
-			}
-			return callback(new Error("请输入正确的账号"));
-		};
-		return {
-			type: "signin",
-			form: {
-				login: null,
-				password: null,
-				client: "ACC",
+import Vue from "@/types";
+import { Component, Watch } from "vue-property-decorator";
+import { Getter } from "vuex-class";
+
+let validateAccount = (rule: any, value: string, callback: any) => {
+	if (!value) {
+		return callback();
+	}
+	if (/^[A-Za-z_]\w{2,30}$/.test(value)) {
+		return callback();
+	}
+	if (/^\d{11}$/.test(value)) {
+		return callback();
+	}
+	if (/^[\w.]{3,30}@[\w.]+$/.test(value)) {
+		return callback();
+	}
+	return callback(new Error("请输入正确的账号"));
+};
+let validateName = (rule: any, value: string, callback: any) => {
+	if (!value) {
+		return callback();
+	}
+	if (/^[A-Za-z_]\w{2,30}$/.test(value)) {
+		return callback();
+	}
+	return callback(new Error("请输入正确的账号"));
+};
+
+@Component
+export default class extends Vue {
+	@Getter account: string | undefined;
+	type: string = "signin";
+	form: any = {
+		login: null,
+		password: null,
+		client: "ACC",
+	};
+	registerForm: any = {
+		username: null,
+		password: null,
+		repassword: null,
+		phone: undefined,
+		email: undefined,
+		client: "ACC",
+	};
+	rememberMe: boolean = false;
+	loading: boolean = false;
+	rules: any = {
+		login: [
+			{ required: true, message: "请输入帐号", trigger: "blur" },
+			{
+				min: 3,
+				max: 30,
+				message: "长度至少 3 个字符",
+				trigger: "blur",
 			},
-			registerForm: {
-				username: null,
-				password: null,
-				repassword: null,
-				phone: undefined,
-				email: undefined,
-				client: "ACC",
+			{ validator: validateAccount, trigger: "blur" },
+		],
+		password: [
+			{ required: true, message: "请输入密码", trigger: "blur" },
+			{
+				min: 6,
+				max: 30,
+				message: "长度至少 6 个字符",
+				trigger: "blur",
 			},
-			rememberMe: false,
-			loading: false,
-			rules: {
-				login: [
-					{ required: true, message: "请输入帐号", trigger: "blur" },
-					{
-						min: 3,
-						max: 30,
-						message: "长度至少 3 个字符",
-						trigger: "blur",
-					},
-					{ validator: validateAccount, trigger: "blur" },
-				],
-				password: [
-					{ required: true, message: "请输入密码", trigger: "blur" },
-					{
-						min: 6,
-						max: 30,
-						message: "长度至少 6 个字符",
-						trigger: "blur",
-					},
-				],
+		],
+	};
+	registerRules: any = {
+		username: [
+			{ required: true, message: "请输入帐号", trigger: "blur" },
+			{
+				min: 3,
+				max: 30,
+				message: "长度至少 3 个字符",
+				trigger: "blur",
 			},
-			registerRules: {
-				username: [
-					{ required: true, message: "请输入帐号", trigger: "blur" },
-					{
-						min: 3,
-						max: 30,
-						message: "长度至少 3 个字符",
-						trigger: "blur",
-					},
-					{ validator: validateName, trigger: "blur" },
-				],
-				password: [
-					{ required: true, message: "请输入密码", trigger: "blur" },
-					{
-						min: 6,
-						max: 30,
-						message: "长度至少 6 个字符",
-						trigger: "blur",
-					},
-				],
-				repassword: [{ validator: validatePassword, trigger: "blur" }],
-				email: [
-					{
-						type: "email",
-						message: "请输入正确的邮箱地址",
-						trigger: ["blur", "change"],
-					},
-				],
+			{ validator: validateName, trigger: "blur" },
+		],
+		password: [
+			{ required: true, message: "请输入密码", trigger: "blur" },
+			{
+				min: 6,
+				max: 30,
+				message: "长度至少 6 个字符",
+				trigger: "blur",
 			},
-			redirect: null,
-			pwd: {
-				view: false,
-				icon: "fa-eye-slash",
-				type: "password",
+		],
+		repassword: [
+			{ required: true, message: "请输入密码", trigger: "blur" },
+			{ validator: this.validatePassword, trigger: "blur" },
+		],
+		email: [
+			{
+				type: "email",
+				message: "请输入正确的邮箱地址",
+				trigger: ["blur", "change"],
 			},
-		};
-	},
-	watch: {
-		$route: {
-			handler(route) {
-				this.redirect = route.query && route.query.redirect;
-			},
-			immediate: true,
-		},
-	},
-	computed: {
-		...mapGetters(["account"]),
-	},
+		],
+	};
+	redirect: string = "";
+	pwd: any = {
+		view: false,
+		icon: "fa-eye-slash",
+		type: "password",
+	};
+	@Watch("$route")
+	onRouteChanged(route: any) {
+		this.redirect = route.query && route.query.redirect;
+	}
 	mounted() {
 		if (this.account) {
 			this.form.login = this.account;
@@ -217,7 +205,7 @@ export default {
 						}
 						this.$router.push({ path: this.redirect || "/" });
 					})
-					.catch(action => {
+					.catch((action: string) => {
 						// 避免 浏览器前进后退 <- ->导致的页面错误
 						if (!this.$route.path.includes("login")) {
 							return;
@@ -232,80 +220,87 @@ export default {
 					});
 			}
 		});
-	},
-	methods: {
-		signin() {
-			this.$refs.form.validate(valid => {
-				if (valid) {
-					if (this.loading) {
-						return;
-					}
-					this.loading = true;
-					this.$store.commit(
-						"SET_ACCOUNT",
-						this.rememberMe ? this.form.login : ""
-					);
-					this.post("dis/access-tokens", this.form)
-						.then(res => {
-							const self = this;
-							this.$message({
-								message: "登录成功",
-								type: "success",
-							});
-							setToken(res[LOCAL_SESSION], res.expireAt);
-							this.$store.dispatch("GetProfile");
-							self.$router.push({ path: self.redirect || "/" });
-						})
-						.catch(() => {
-							this.loading = false;
-						});
+	}
+	private validatePassword(rule: any, value: string, callback: any) {
+		if (value === "") {
+			callback(new Error("请再次输入密码"));
+		} else if (value !== this.registerForm.password) {
+			callback(new Error("两次输入密码不一致!"));
+		} else {
+			callback();
+		}
+	}
+	swichType(type: string, ref: string) {
+		this.type = type;
+		(<any>this.$refs[ref]).clearValidate();
+	}
+	signin() {
+		(<any>this.$refs.form).validate((valid: boolean) => {
+			if (valid) {
+				if (this.loading) {
+					return;
 				}
-			});
-		},
-		togglePwd() {
-			this.pwd.view = !this.pwd.view;
-			if (this.pwd.view) {
-				this.pwd.icon = "fa-eye";
-				this.pwd.type = "text";
-			} else {
-				this.pwd.icon = "fa-eye-slash";
-				this.pwd.type = "password";
+				this.loading = true;
+				this.$store.commit(
+					"SET_ACCOUNT",
+					this.rememberMe ? this.form.login : ""
+				);
+				this.post("dis/access-tokens", this.form)
+					.then((res: any) => {
+						const self = this;
+						this.$message({
+							message: "登录成功",
+							type: "success",
+						});
+						setToken(res[LOCAL_SESSION], res.expireAt);
+						this.$store.dispatch("GetProfile");
+						self.$router.push({ path: self.redirect || "/" });
+					})
+					.catch(() => {
+						this.loading = false;
+					});
 			}
-		},
-		signup() {
-			this.$refs.registerForm.validate(valid => {
-				if (valid) {
-					if (this.loading) {
-						return;
-					}
-					this.loading = true;
-					this.post("dis/users", this.registerForm)
-						.then(res => {
-							const self = this;
-							this.$message({
-								message: "注册成功",
-								type: "success",
-								onClose() {
-									self.$router.push({
-										path: self.redirect || "/",
-									});
-								},
-							});
-							setToken(res[LOCAL_SESSION], res.expireAt);
-							this.$store.dispatch("GetProfile");
-						})
-						.catch(() => {
-							this.loading = false;
-						});
+		});
+	}
+	togglePwd() {
+		this.pwd.view = !this.pwd.view;
+		if (this.pwd.view) {
+			this.pwd.icon = "fa-eye";
+			this.pwd.type = "text";
+		} else {
+			this.pwd.icon = "fa-eye-slash";
+			this.pwd.type = "password";
+		}
+	}
+	signup() {
+		(<any>this.$refs.registerForm).validate((valid: boolean) => {
+			if (valid) {
+				if (this.loading) {
+					return;
 				}
-			});
-		},
-		swichType(type, ref) {
-			this.type = type;
-			this.$refs[ref].clearValidate();
-		},
-	},
-};
+				this.loading = true;
+				this.post("dis/users", this.registerForm)
+					.then((res: any) => {
+						const self = this;
+						this.$message({
+							message: "注册成功",
+							type: "success",
+							onClose() {
+								self.$router.push({
+									path: self.redirect || "/",
+								});
+							},
+						});
+						setToken(res[LOCAL_SESSION], res.expireAt);
+						this.$store.dispatch("GetProfile");
+					})
+					.catch(() => {
+						this.loading = false;
+					});
+			}
+		});
+	}
+}
 </script>
 <style lang="scss" scoped>
 .box-card {

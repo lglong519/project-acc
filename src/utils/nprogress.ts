@@ -8,7 +8,7 @@ nprogress.configure({ easing: "ease", speed: 500, showSpinner: false });
 
 router.beforeEach((to: any, from: any, next: any) => {
 	nprogress.start();
-	if (!getToken() && to.path != "/login") {
+	if (!getToken() && !/\/(login|404)/.test(to.path)) {
 		next({
 			path: "/login",
 			query: { redirect: to.fullPath },

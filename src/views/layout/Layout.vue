@@ -15,7 +15,7 @@
 </template>
 
 <script lang="ts">
-import Vue from "vue";
+import Vue from "@/types";
 import { Component } from "vue-property-decorator";
 import { Navbar, Sidebar, AppMain, TagsView } from "./components";
 import ResizeMixin from "./mixin/ResizeHandler";
@@ -32,7 +32,7 @@ import { Getter } from "vuex-class";
 })
 export default class Layout extends Vue {
 	@Getter sidebar: any;
-	@Getter device: any;
+	@Getter device: string | undefined;
 	get classObj() {
 		return {
 			hideSidebar: !this.sidebar.opened,
