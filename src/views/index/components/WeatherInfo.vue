@@ -96,11 +96,11 @@ export default {
 		selectCity() {},
 	},
 	async created() {
-		this.weather = await this.get("services/weather");
-		if (!_.get(this.weather, "data.weather.content.city")) {
-			this.weather = {};
+		let result = await this.get("common/weather");
+		if (!_.get(result, "data.weather.content.city")) {
 			return;
 		}
+		this.weather = result;
 		localStorage.setItem("weather", JSON.stringify(this.weather));
 	},
 };

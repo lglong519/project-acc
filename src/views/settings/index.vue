@@ -1,7 +1,7 @@
 <template>
 	<div class="app-container">
 		<el-card>
-			<el-form :model="editForm" :rules="editRules" ref="editform" label-width="80px">
+			<el-form :model="editForm" :rules="editRules" ref="editform" label-width="80px" :label-position="labelPosition">
 				<el-form-item>
 					<img :src="editForm.image||avatar" class="avatar">
 				</el-form-item>
@@ -67,6 +67,7 @@ function editForm(): any {
 @Component
 export default class extends Vue {
 	@Getter myProfile: any;
+	@Getter device: string | undefined;
 
 	avatar: string = require("@/assets/avatar.svg");
 	source: string = "squats";
@@ -103,6 +104,12 @@ export default class extends Vue {
 	@Watch("myProfile")
 	onProfileChanged() {
 		this.editForm = JSON.parse(JSON.stringify(this.myProfile));
+	}
+	get labelPosition(): string {
+		if (this.device == "mobile") {
+			return "top";
+		}
+		return "left";
 	}
 	created() {
 		this.editForm = JSON.parse(JSON.stringify(this.myProfile));

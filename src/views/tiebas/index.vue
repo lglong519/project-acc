@@ -141,7 +141,7 @@ export default class extends Vue {
 		],
 	};
 	tableLoading: boolean = false;
-	searchProp: string | boolean = "";
+	searchProp: string = "";
 	searchProps: any[] = [
 		{
 			status: "",
@@ -160,11 +160,11 @@ export default class extends Vue {
 			label: "出错",
 		},
 		{
-			status: true,
+			status: "void",
 			label: "忽略",
 		},
 		{
-			status: false,
+			status: "unactive",
 			label: "无效",
 		},
 	];
@@ -208,26 +208,13 @@ export default class extends Vue {
 			}
 		);
 	}
-
 	queryTiebas() {
 		this.tableLoading = true;
 		let query: any = {};
 		if (this.currAccount) {
 			query.tiebaAccount = this.currAccount._id;
 		}
-		if (this.searchProp) {
-			query.active = true;
-			if (this.searchProp === true) {
-				query.void = true;
-			} else {
-				query.status = this.searchProp;
-				query.void = {
-					$ne: true,
-				};
-			}
-		} else if (this.searchProp === false) {
-			query.active = false;
-		}
+		Object.assign(query, generateQeuqryOptions(this.searchProp));
 		return this.query(
 			`dis/tiebas?pageSize=${this.pagination.pageSize}&p=${this.pagination
 				.currentPage - 1}&q=${JSON.stringify(query)}`
@@ -376,6 +363,71 @@ export default class extends Vue {
 				});
 			});
 	}
+}
+function generateQeuqryOptions(status: string) {
+	if (!status) {
+		return {};
+	}
+	if (status == "pendding") {
+		return {
+			$or: [
+				{
+					status: "pendding",
+					void: false,
+					active: true,
+				},
+				{
+					status: "resolve",
+					update: {
+						$lt: new Date(
+							`${new Date().toLocaleDateString()} 00:00`
+						),
+					},
+					void: false,
+					active: true,
+				},
+			],
+		};
+	}
+	if (status == "resolve") {
+		return {
+			update: {
+				$gte: new Date(`${new Date().toLocaleDateString()} 00:00`),
+			},
+			status: "resolve",
+			void: false,
+			active: true,
+		};
+	}
+	if (status == "resolve") {
+		return {
+			update: {
+				$gte: new Date(`${new Date().toLocaleDateString()} 00:00`),
+			},
+			status: "resolve",
+			void: false,
+			active: true,
+		};
+	}
+	if (status == "reject") {
+		return {
+			status: "reject",
+			void: false,
+			active: true,
+		};
+	}
+	if (status == "void") {
+		return {
+			void: true,
+			active: true,
+		};
+	}
+	if (status == "unactive") {
+		return {
+			active: false,
+		};
+	}
+	return {};
 }
 </script>
 
