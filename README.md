@@ -1,6 +1,6 @@
 # project-acc
 
-**Live:** http://mofunc.com/acc/
+**Live:** <a href="http://mofunc.com/acc/" target="_blank">http://mofunc.com/acc/</a>
 
 ## Project setup
 ```

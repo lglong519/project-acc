@@ -1,73 +1,77 @@
 <template>
-	<div>
-		<el-card class="box-card">
-			<el-row type="flex" justify="space-between">
-				<div>{{type =='signin'?'登录':'注册'}}</div>
-			</el-row>
-			<br>
-			<!-- 登录 -->
-			<el-form v-show="type=='signin'" :model="form" :rules="rules" ref="form">
-				<el-form-item prop="login">
-					<el-input placeholder="帐号/邮箱/手机" type="text" v-model="form.login" @keyup.enter.native="signin" clearable :disabled="loading">
-						<i slot="prefix" class="fa fa-user el-input__icon"></i>
-					</el-input>
-				</el-form-item>
-				<el-form-item prop="password">
-					<el-input placeholder="请输入密码" :type="pwd.type" v-model="form.password" @keyup.enter.native="signin" :disabled="loading">
-						<i class="fa el-input__icon" style="color:#8CC4FF" :class="pwd.icon" slot="suffix" @click="togglePwd">
-						</i>
-						<i slot="prefix" class="fa fa-lock el-input__icon"></i>
-					</el-input>
-				</el-form-item>
-			</el-form>
-			<!-- 注册 -->
-			<el-form v-show="type=='signup'" :model="registerForm" :rules="registerRules" ref="registerForm">
-				<el-form-item prop="username">
-					<el-input placeholder="帐号" type="text" v-model="registerForm.username" @keyup.enter.native="signin" clearable :disabled="loading" required>
-						<i slot="prefix" class="fa fa-user el-input__icon"></i>
-					</el-input>
-				</el-form-item>
-				<el-form-item prop="password">
-					<el-input placeholder="设置密码" :type="pwd.type" v-model="registerForm.password" @keyup.enter.native="signin" :disabled="loading">
-						<i class="fa el-input__icon" style="color:#8CC4FF" :class="pwd.icon" slot="suffix" @click="togglePwd">
-						</i>
-						<i slot="prefix" class="fa fa-lock el-input__icon"></i>
-					</el-input>
-				</el-form-item>
-				<el-form-item prop="repassword">
-					<el-input placeholder="确认密码" :type="pwd.type" v-model="registerForm.repassword" @keyup.enter.native="signin" :disabled="loading">
-						<i class="fa el-input__icon" style="color:#8CC4FF" :class="pwd.icon" slot="suffix" @click="togglePwd">
-						</i>
-						<i slot="prefix" class="fa fa-lock el-input__icon"></i>
-					</el-input>
-				</el-form-item>
-				<el-form-item prop="email">
-					<el-input placeholder="邮箱" type="text" v-model="registerForm.email" @keyup.enter.native="signin" clearable :disabled="loading" required>
-						<i slot="prefix" class="fa el-icon-message el-input__icon"></i>
-					</el-input>
-				</el-form-item>
-				<el-form-item prop="phone">
-					<el-input placeholder="手机号码" type="text" v-model="registerForm.phone" @keyup.enter.native="signin" clearable :disabled="loading" required>
-						<i slot="prefix" class="fa fa-phone el-input__icon"></i>
-					</el-input>
-				</el-form-item>
-			</el-form>
-			<!-- btn -->
-			<el-row v-if="type=='signin'" type="flex" justify="space-between">
-				<el-checkbox v-model="rememberMe">记住帐号</el-checkbox>
-				<div>
-					<el-button type="text" size="medium" :disabled="loading" @click="swichType('signup','registerForm')">注册</el-button>
-					<el-button type="primary" size="medium" :loading="loading" :disabled="loading" @click="signin" plain>{{loading?"登录中...":"登录"}}</el-button>
-				</div>
-			</el-row>
-			<el-row v-else type="flex" justify="end">
-				<el-button type="text" size="medium" :disabled="loading" @click="swichType('signin','form')">登录</el-button>
-				<el-button type="primary" size="medium" :loading="loading" :disabled="loading" @click="signup" plain>{{loading?"注册...":"注册"}}</el-button>
-			</el-row>
-		</el-card>
+	<div class="app-main">
+		<div class="wrapper">
+			<el-card class="box-card">
+				<el-row type="flex" justify="space-between">
+					<div>{{type =='signin'?'登录':'注册'}}</div>
+				</el-row>
+				<br>
+				<!-- 登录 -->
+				<el-form v-show="type=='signin'" :model="form" :rules="rules" ref="form">
+					<el-form-item prop="login">
+						<el-input placeholder="帐号/邮箱/手机" type="text" v-model="form.login" @keyup.enter.native="signin" clearable :disabled="loading">
+							<i slot="prefix" class="fa fa-user el-input__icon"></i>
+						</el-input>
+					</el-form-item>
+					<el-form-item prop="password">
+						<el-input placeholder="请输入密码" :type="pwd.type" v-model="form.password" @keyup.enter.native="signin" :disabled="loading">
+							<i class="fa el-input__icon" style="color:#8CC4FF" :class="pwd.icon" slot="suffix" @click="togglePwd">
+							</i>
+							<i slot="prefix" class="fa fa-lock el-input__icon"></i>
+						</el-input>
+					</el-form-item>
+				</el-form>
+				<!-- 注册 -->
+				<el-form v-show="type=='signup'" :model="registerForm" :rules="registerRules" ref="registerForm">
+					<el-form-item prop="username">
+						<el-input placeholder="帐号" type="text" v-model="registerForm.username" @keyup.enter.native="signin" clearable :disabled="loading" required>
+							<i slot="prefix" class="fa fa-user el-input__icon"></i>
+						</el-input>
+					</el-form-item>
+					<el-form-item prop="password">
+						<el-input placeholder="设置密码" :type="pwd.type" v-model="registerForm.password" @keyup.enter.native="signin" :disabled="loading">
+							<i class="fa el-input__icon" style="color:#8CC4FF" :class="pwd.icon" slot="suffix" @click="togglePwd">
+							</i>
+							<i slot="prefix" class="fa fa-lock el-input__icon"></i>
+						</el-input>
+					</el-form-item>
+					<el-form-item prop="repassword">
+						<el-input placeholder="确认密码" :type="pwd.type" v-model="registerForm.repassword" @keyup.enter.native="signin" :disabled="loading">
+							<i class="fa el-input__icon" style="color:#8CC4FF" :class="pwd.icon" slot="suffix" @click="togglePwd">
+							</i>
+							<i slot="prefix" class="fa fa-lock el-input__icon"></i>
+						</el-input>
+					</el-form-item>
+					<el-form-item prop="email">
+						<el-input placeholder="邮箱" type="text" v-model="registerForm.email" @keyup.enter.native="signin" clearable :disabled="loading" required>
+							<i slot="prefix" class="fa el-icon-message el-input__icon"></i>
+						</el-input>
+					</el-form-item>
+					<el-form-item prop="phone">
+						<el-input placeholder="手机号码" type="text" v-model="registerForm.phone" @keyup.enter.native="signin" clearable :disabled="loading" required>
+							<i slot="prefix" class="fa fa-phone el-input__icon"></i>
+						</el-input>
+					</el-form-item>
+				</el-form>
+				<!-- btn -->
+				<el-row v-if="type=='signin'" type="flex" justify="space-between">
+					<el-checkbox v-model="rememberMe">记住帐号</el-checkbox>
+					<div>
+						<el-button type="text" size="medium" :disabled="loading" @click="swichType('signup','registerForm')">注册</el-button>
+						<el-button type="primary" size="medium" :loading="loading" :disabled="loading" @click="signin" plain>{{loading?"登录中...":"登录"}}</el-button>
+					</div>
+				</el-row>
+				<el-row v-else type="flex" justify="end">
+					<el-button type="text" size="medium" :disabled="loading" @click="swichType('signin','form')">登录</el-button>
+					<el-button type="primary" size="medium" :loading="loading" :disabled="loading" @click="signup" plain>{{loading?"注册...":"注册"}}</el-button>
+				</el-row>
+			</el-card>
+		</div>
+		<icp/>
 	</div>
 </template>
 <script lang="ts">
+import { icp } from "./layout/components";
 import { setToken, removeToken } from "@/utils/auth";
 const { LOCAL_SESSION } = require("@/.config");
 
@@ -100,7 +104,11 @@ let validateName = (rule: any, value: string, callback: any) => {
 	return callback(new Error("请输入正确的账号"));
 };
 
-@Component
+@Component({
+	components: {
+		icp,
+	},
+})
 export default class extends Vue {
 	@Getter account: string | undefined;
 	type: string = "signin";
@@ -303,6 +311,9 @@ export default class extends Vue {
 }
 </script>
 <style lang="scss" scoped>
+.wrapper {
+	min-height: calc(100vh - 50px);
+}
 .box-card {
 	margin: 100px auto;
 	max-width: 500px;

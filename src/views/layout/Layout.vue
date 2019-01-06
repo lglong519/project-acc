@@ -10,6 +10,7 @@
 			<tags-view />
 			<!-- 内容区 -->
 			<app-main />
+			<icp/>
 		</div>
 	</div>
 </template>
@@ -17,7 +18,7 @@
 <script lang="ts">
 import Vue from "@/types";
 import { Component } from "vue-property-decorator";
-import { Navbar, Sidebar, AppMain, TagsView } from "./components";
+import { Navbar, Sidebar, AppMain, TagsView, icp } from "./components";
 import ResizeMixin from "./mixin/ResizeHandler";
 import { Getter } from "vuex-class";
 
@@ -27,6 +28,7 @@ import { Getter } from "vuex-class";
 		Sidebar,
 		AppMain,
 		TagsView,
+		icp,
 	},
 	mixins: [ResizeMixin],
 })

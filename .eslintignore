@@ -1,1 +1,3 @@
 src/views/layout/components/Sidebar/Item.vue
+dist
+tsc

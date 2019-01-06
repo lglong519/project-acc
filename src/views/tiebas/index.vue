@@ -67,7 +67,7 @@
 				<div class="float-left">
 					<el-button size="small" @click="queryAccount" plain>刷新</el-button>
 				</div>
-				<el-pagination layout="total, sizes, prev, pager, next, jumper" @size-change="pageSizeChange" :page-sizes="pagination.pageSizes" :total="pagination.total" @current-change="pageChange"></el-pagination>
+				<el-pagination layout="total, sizes, prev, pager, next, jumper" @size-change="pageSizeChange" :page-sizes="pagination.pageSizes" :total="pagination.total" @current-change="pageChange" :current-page="pagination.currentPage"></el-pagination>
 			</div>
 		</el-tabs>
 
@@ -337,6 +337,7 @@ export default class extends Vue {
 			});
 	}
 	searchBystatus() {
+		this.pagination.currentPage = 1;
 		this.queryTiebas();
 	}
 	deleteAccount() {
@@ -378,7 +379,7 @@ function generateQeuqryOptions(status: string) {
 				},
 				{
 					status: "resolve",
-					update: {
+					updatedAt: {
 						$lt: new Date(
 							`${new Date().toLocaleDateString()} 00:00`
 						),
@@ -391,7 +392,7 @@ function generateQeuqryOptions(status: string) {
 	}
 	if (status == "resolve") {
 		return {
-			update: {
+			updatedAt: {
 				$gte: new Date(`${new Date().toLocaleDateString()} 00:00`),
 			},
 			status: "resolve",
@@ -401,7 +402,7 @@ function generateQeuqryOptions(status: string) {
 	}
 	if (status == "resolve") {
 		return {
-			update: {
+			updatedAt: {
 				$gte: new Date(`${new Date().toLocaleDateString()} 00:00`),
 			},
 			status: "resolve",
