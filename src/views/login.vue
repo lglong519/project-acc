@@ -256,9 +256,8 @@ export default class extends Vue {
 				this.post("dis/access-tokens", this.form)
 					.then((res: any) => {
 						const self = this;
-						this.$message({
+						this.$notify.success({
 							message: "登录成功",
-							type: "success",
 						});
 						setToken(res[LOCAL_SESSION], res.expireAt);
 						this.$store.dispatch("GetProfile");
