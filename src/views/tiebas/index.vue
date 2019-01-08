@@ -2,7 +2,7 @@
 	<div class="app-container">
 		<el-card class="summarize" shadow="hover">
 			<el-row>
-				总共 {{summarize.total}} 个贴吧，已签 {{summarize.resolve}} 个，待签 {{summarize.pendding}} 个，出错 {{summarize.reject}} 个，忽略 {{summarize.void}} 个， 无效 {{summarize.invalid}} 个
+				总共 {{summarize.total}} 个贴吧，已签 {{summarize.resolve}} 个，待签 {{summarize.pending}} 个，出错 {{summarize.reject}} 个，忽略 {{summarize.void}} 个， 无效 {{summarize.invalid}} 个
 			</el-row>
 			<el-button-group>
 				<el-button plain size="mini" type="primary" @click="sync">更新列表</el-button>
@@ -30,7 +30,7 @@
 				</el-table-column>
 				<el-table-column prop="status" label="状态" align="center" width="50">
 					<template slot-scope="scope">
-						<span v-if="scope.row.status=='pendding'">待签</span>
+						<span v-if="scope.row.status=='pending'">待签</span>
 						<span v-if="scope.row.status=='resolve'">已签</span>
 						<span v-if="scope.row.status=='reject'">出错</span>
 					</template>
@@ -115,7 +115,7 @@ export default class extends Vue {
 	summarize: any = {
 		total: 0,
 		resolve: 0,
-		pendding: 0,
+		pending: 0,
 		reject: 0,
 		void: 0,
 		invalid: 0,
@@ -148,7 +148,7 @@ export default class extends Vue {
 			label: "全部",
 		},
 		{
-			status: "pendding",
+			status: "pending",
 			label: "待签",
 		},
 		{
@@ -172,7 +172,7 @@ export default class extends Vue {
 		if (this.device == "mobile") {
 			return "top";
 		}
-		return "left";
+		return "right";
 	}
 	created() {
 		this.queryAccount();
@@ -369,11 +369,11 @@ function generateQeuqryOptions(status: string) {
 	if (!status) {
 		return {};
 	}
-	if (status == "pendding") {
+	if (status == "pending") {
 		return {
 			$or: [
 				{
-					status: "pendding",
+					status: "pending",
 					void: false,
 					active: true,
 				},

@@ -109,7 +109,7 @@ export default class extends Vue {
 		if (this.device == "mobile") {
 			return "top";
 		}
-		return "left";
+		return "right";
 	}
 	created() {
 		this.editForm = JSON.parse(JSON.stringify(this.myProfile));
